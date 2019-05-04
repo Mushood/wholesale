@@ -15,6 +15,7 @@ This project provides an interface to manage selling products in wholesale while
 - Blogging
 - Internationalization (Currency / Language)
 - Image management
+- CSV/Excel Export
 
 The application is developed in a TDD way to ensure that our code is reliable
 
