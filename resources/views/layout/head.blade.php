@@ -6,4 +6,4 @@
 <title>Wholesale Market</title>
 
 <!-- Bootstrap core CSS -->
-<link href="css/app.css" rel="stylesheet">
+<link href="{{asset('css/app.css')}}" rel="stylesheet">
