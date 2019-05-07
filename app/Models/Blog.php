@@ -22,4 +22,12 @@ class Blog extends Model
      * @var array
      */
     protected $with = ['translations'];
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function user()
+    {
+        return $this->belongsTo('App\Models\User');
+    }
 }

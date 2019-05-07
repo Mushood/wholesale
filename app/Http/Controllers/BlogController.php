@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\BlogRequest;
+use App\Http\Resources\BlogResource;
 use App\Models\Blog;
 use Illuminate\Http\Request;
 
@@ -20,9 +21,7 @@ class BlogController extends Controller
 
         if ($request->wantsJson()) {
 
-            return response()->json([
-                'blogs' => $blogs
-            ]);
+            return BlogResource::collection($blogs);
         }
 
         return view('blog.index', compact('blogs'));
@@ -53,9 +52,7 @@ class BlogController extends Controller
 
         if ($request->wantsJson()) {
 
-            return response()->json([
-                'blog' => $blog
-            ]);
+            return new BlogResource($blog);
         }
 
         return redirect()->route('blog.index');
@@ -72,9 +69,7 @@ class BlogController extends Controller
     {
         if ($request->wantsJson()) {
 
-            return response()->json([
-                'blog' => $blog
-            ]);
+            return new BlogResource($blog);
         }
 
         return view('blog.show', compact('blog'));
@@ -91,9 +86,7 @@ class BlogController extends Controller
     {
         if ($request->wantsJson()) {
 
-            return response()->json([
-                'blog' => $blog
-            ]);
+            return new BlogResource($blog);
         }
 
         return view('blog.create', compact('blog'));
@@ -114,9 +107,7 @@ class BlogController extends Controller
 
         if ($request->wantsJson()) {
 
-            return response()->json([
-                'blog' => $blog
-            ]);
+            return new BlogResource($blog);
         }
 
         return redirect()->route('blog.index');

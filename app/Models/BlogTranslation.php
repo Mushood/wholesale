@@ -12,4 +12,12 @@ class BlogTranslation extends Model
     protected $fillable = ['title', 'subtitle', 'introduction', 'body'];
 
     public $timestamps = false;
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function blog()
+    {
+        return $this->belongsTo('App\Models\Blog');
+    }
 }
