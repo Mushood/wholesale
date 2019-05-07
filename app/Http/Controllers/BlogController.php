@@ -6,6 +6,7 @@ use App\Http\Requests\BlogRequest;
 use App\Http\Resources\BlogResource;
 use App\Models\Blog;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 
 class BlogController extends Controller
 {
@@ -17,7 +18,7 @@ class BlogController extends Controller
      */
     public function index(Request $request)
     {
-        $blogs = Blog::latest()->paginate(10);
+        $blogs = Blog::latest()->paginate(SELF::PAGINATION);
 
         if ($request->wantsJson()) {
 
@@ -84,10 +85,6 @@ class BlogController extends Controller
      */
     public function edit(BlogRequest $request, Blog $blog)
     {
-        if ($request->wantsJson()) {
-
-            return new BlogResource($blog);
-        }
 
         return view('blog.create', compact('blog'));
     }
@@ -99,7 +96,7 @@ class BlogController extends Controller
      * @param Blog $blog
      * @return \Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse
      */
-    public function update(Request $request, Blog $blog)
+    public function update(BlogRequest $request, Blog $blog)
     {
         $validated = $request->validated();
 
@@ -115,14 +112,21 @@ class BlogController extends Controller
 
     /**
      * Remove the specified resource from storage.
-     * 
+     *
+     * @param Request $request
      * @param Blog $blog
      * @return \Illuminate\Http\RedirectResponse
      * @throws \Exception
      */
-    public function destroy(Blog $blog)
+    public function destroy(Request $request, Blog $blog)
     {
         $blog->delete();
+
+        if ($request->wantsJson()) {
+
+            return response()->json([] , Response::HTTP_OK);
+        }
+
 
         return redirect()->route('blog.index');
     }

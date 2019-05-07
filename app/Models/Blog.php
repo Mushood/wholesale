@@ -30,4 +30,12 @@ class Blog extends Model
     {
         return $this->belongsTo('App\Models\User');
     }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
+    public function translation()
+    {
+        return $this->hasOne('App\Models\BlogTranslation');
+    }
 }
