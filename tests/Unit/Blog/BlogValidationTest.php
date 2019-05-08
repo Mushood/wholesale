@@ -2,34 +2,17 @@
 
 namespace Tests\Unit;
 
-use Tests\TestCase;
-use App\Models\Blog;
+use Tests\BlogTestCase;
 use Illuminate\Http\Response;
-use Illuminate\Support\Facades\Session;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 
-class BlogValidationTest extends TestCase
+class BlogValidationTest extends BlogTestCase
 {
     use DatabaseTransactions;
-
-    protected $blog;
-
-    protected $blogData;
 
     public function setUp() : void
     {
         parent::setUp();
-
-        $this->blog = Blog::first();
-
-        $this->blogData = [
-            'title'         => 'title',
-            'body'          => 'body',
-            'subtitle'      => 'subtitle',
-            'introduction'  => 'introduction'
-        ];
-
-        Session::start();
     }
 
     /**
@@ -37,15 +20,15 @@ class BlogValidationTest extends TestCase
      */
     public function testBlogRequiresTitle()
     {
-        $this->assertDatabaseMissing('blog_translations', $this->blogData);
+        $this->assertDatabaseMissing('blog_translations', $this->data);
 
         $this->addCSRFTokenAndUnsetField('title');
-        $response = $this->post('blog', $this->blogData);
+        $response = $this->post('blog', $this->data);
 
         $response->assertStatus(Response::HTTP_FOUND);
 
-        unset($this->blogData['_token']);
-        $this->assertDatabaseMissing('blog_translations', $this->blogData);
+        $this->removeCsrfToken();
+        $this->assertDatabaseMissing('blog_translations', $this->data);
 
         $response->assertSee('Redirecting');
     }
@@ -55,15 +38,15 @@ class BlogValidationTest extends TestCase
      */
     public function testBlogRequiresBody()
     {
-        $this->assertDatabaseMissing('blog_translations', $this->blogData);
+        $this->assertDatabaseMissing('blog_translations', $this->data);
 
         $this->addCSRFTokenAndUnsetField('body');
-        $response = $this->post('blog', $this->blogData);
+        $response = $this->post('blog', $this->data);
 
         $response->assertStatus(Response::HTTP_FOUND);
 
-        unset($this->blogData['_token']);
-        $this->assertDatabaseMissing('blog_translations', $this->blogData);
+        $this->removeCsrfToken();
+        $this->assertDatabaseMissing('blog_translations', $this->data);
 
         $response->assertSee('Redirecting');
     }
@@ -73,20 +56,26 @@ class BlogValidationTest extends TestCase
      */
     public function testBlogRequiresCsrfToken()
     {
-        $this->assertDatabaseMissing('blog_translations', $this->blogData);
+        $this->assertDatabaseMissing('blog_translations', $this->data);
 
-        $response = $this->post('blog', $this->blogData);
+        $response = $this->post('blog', $this->data);
 
         $response->assertStatus(419);
 
-        $this->assertDatabaseMissing('blog_translations', $this->blogData);
+        $this->assertDatabaseMissing('blog_translations', $this->data);
 
         $response->assertSee('Page Expired');
     }
 
-    private function addCSRFTokenAndUnsetField(String $unset)
+    protected function addCSRFTokenAndUnsetField(String $unset)
     {
-        unset($this->blogData[$unset]);
-        $this->blogData['_token'] = csrf_token();
+        $this->overrideData([ $unset => null]);
+        $this->addCsrfToken();
     }
+    #TODO
+    /**
+     * Policy
+     * Add Author
+     * Add Publishable Trait
+     */
 }

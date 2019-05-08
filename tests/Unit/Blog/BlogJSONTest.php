@@ -2,22 +2,14 @@
 
 namespace Tests\Unit;
 
-use Tests\TestCase;
-use App\Models\Blog;
+use Tests\BlogTestCase;
 use Illuminate\Http\Response;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Session;
-use Illuminate\Foundation\Testing\WithFaker;
-use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 
-class BlogJSONTest extends TestCase
+class BlogJSONTest extends BlogTestCase
 {
     use DatabaseTransactions;
-
-    protected $blog;
-
-    protected $blogData;
 
     protected $structure;
 
@@ -25,22 +17,11 @@ class BlogJSONTest extends TestCase
     {
         parent::setUp();
 
-        $this->blog = Blog::first();
-
-        $this->blogData = [
-            'title'         => 'title',
-            'body'          => 'body',
-            'subtitle'      => 'subtitle',
-            'introduction'  => 'introduction'
-        ];
-
         $this->structure = [
             'data' => [
                 'id', 'title', 'subtitle', 'introduction' , 'body' , 'views' , 'author',
             ]
         ];
-
-        Session::start();
     }
 
     /**
@@ -63,17 +44,17 @@ class BlogJSONTest extends TestCase
      */
     public function testUserCanCreateNewBlogJSON()
     {
-        $this->assertDatabaseMissing('blog_translations', $this->blogData);
+        $this->assertDatabaseMissing('blog_translations', $this->data);
 
-        $this->blogData['_token'] = csrf_token();
+        $this->addCsrfToken();
         $response = $this->withHeaders([
             'Accept' => 'Application/json',
-        ])->post('blog', $this->blogData);
+        ])->post('blog', $this->data);
 
         $response->assertStatus(Response::HTTP_CREATED);
 
-        unset($this->blogData['_token']);
-        $this->assertDatabaseHas('blog_translations', $this->blogData);
+        unset($this->data['_token']);
+        $this->assertDatabaseHas('blog_translations', $this->data);
 
         $response->assertJsonStructure($this->structure);
     }
@@ -101,17 +82,19 @@ class BlogJSONTest extends TestCase
             'body'  => $this->blog->body
         ]);
 
-        $this->blogData['title'] = 'title_updated';
-        $this->blogData['body'] = 'body_updated';
-        $this->blogData['_token'] = csrf_token();
+        $this->overrideData([
+            'title' => 'title_updated',
+            'body'  => 'body_updated'
+        ]);
+        $this->addCsrfToken();
         $response = $this->withHeaders([
             'Accept' => 'Application/json',
-        ])->put('/blog/' . $this->blog->id , $this->blogData);
+        ])->put('/blog/' . $this->blog->id , $this->data);
 
         $response->assertStatus(Response::HTTP_OK);
 
-        unset($this->blogData['_token']);
-        $this->assertDatabaseHas('blog_translations', $this->blogData);
+        unset($this->data['_token']);
+        $this->assertDatabaseHas('blog_translations', $this->data);
 
         $response->assertJsonStructure($this->structure);
     }
