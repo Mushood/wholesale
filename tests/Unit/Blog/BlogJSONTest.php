@@ -11,7 +11,7 @@ use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 
-class BlogTest extends TestCase
+class BlogJSONTest extends TestCase
 {
     use DatabaseTransactions;
 
@@ -31,19 +31,6 @@ class BlogTest extends TestCase
      *
      * @return void
      */
-    public function testUserCanRetrieveAllBlogs()
-    {
-        $response = $this->get('/blog');
-
-        $response->assertStatus(Response::HTTP_OK);
-        $response->assertSee('All Blogs');
-    }
-
-    /**
-     * Retrieve all blogs
-     *
-     * @return void
-     */
     public function testUserCanRetrieveAllBlogsJSON()
     {
         $response = $this->withHeaders([
@@ -54,37 +41,9 @@ class BlogTest extends TestCase
         $response->assertJsonCount(Controller::PAGINATION, 'data');
     }
 
-    public function testUserCanAccessCreatePage()
-    {
-        $response = $this->get('/blog/create');
-
-        $response->assertStatus(Response::HTTP_OK);
-        $response->assertSee('Create Blog');
-    }
-
-    public function testUserCanCreateNewBlog()
-    {
-        $this->assertDatabaseMissing('blog_translations', [
-            'title' => 'title',
-            'body'  => 'body'
-        ]);
-
-        $response = $this->post('blog', array(
-            '_token'    => csrf_token(),
-            'title'     => 'title',
-            'body'      => 'body'
-        ));
-
-        $response->assertStatus(Response::HTTP_FOUND);
-
-        $this->assertDatabaseHas('blog_translations', [
-            'title' => 'title',
-            'body'  => 'body'
-        ]);
-
-        $response->assertSee('Redirecting');
-    }
-
+    /**
+     * Api to store new blog
+     */
     public function testUserCanCreateNewBlogJSON()
     {
         $this->assertDatabaseMissing('blog_translations', [
@@ -113,14 +72,9 @@ class BlogTest extends TestCase
         ]);
     }
 
-    public function testUserCanRetrieveABlog()
-    {
-        $response   = $this->get('/blog/' . $this->blog->id);
-
-        $response->assertStatus(Response::HTTP_OK);
-        $response->assertSee($this->blog->title);
-    }
-
+    /**
+     * Api to retrieve the blog
+     */
     public function testUserCanRetrieveABlogJSON()
     {
         $response   = $this->withHeaders([
@@ -134,29 +88,9 @@ class BlogTest extends TestCase
         ]);
     }
 
-    public function testUserCanUpdateBlog()
-    {
-        $this->assertDatabaseHas('blog_translations', [
-            'title' => $this->blog->title,
-            'body'  => $this->blog->body
-        ]);
-
-        $response = $this->put('/blog/' . $this->blog->id , array(
-            '_token'    => csrf_token(),
-            'title'     => 'title_updated',
-            'body'      => 'body_updated'
-        ));
-
-        $response->assertStatus(Response::HTTP_FOUND);
-
-        $this->assertDatabaseHas('blog_translations', [
-            'title'         => 'title_updated',
-            'body'          => 'body_updated'
-        ]);
-
-        $response->assertSee('Redirecting');
-    }
-
+    /**
+     * Api to update the blog
+     */
     public function testUserCanUpdateBlogJSON()
     {
         $this->assertDatabaseHas('blog_translations', [
@@ -185,22 +119,9 @@ class BlogTest extends TestCase
         ]);
     }
 
-    public function testUserCanDeleteABlog()
-    {
-        $this->assertDatabaseHas('blog_translations', [
-            'title' => $this->blog->title,
-            'body'  => $this->blog->body
-        ]);
-
-        $response   = $this->delete('/blog/' . $this->blog->id, ['_token' => csrf_token()]);
-
-        $response->assertStatus(Response::HTTP_FOUND);
-        $this->assertDatabaseMissing('blog_translations', [
-            'title' => $this->blog->title,
-            'body'  => $this->blog->body
-        ]);
-    }
-
+    /**
+     * Api to delete a blog
+     */
     public function testUserCanDeleteABlogJSON()
     {
         $this->assertDatabaseHas('blog_translations', [
@@ -218,11 +139,4 @@ class BlogTest extends TestCase
             'body'  => $this->blog->body
         ]);
     }
-
-    #TODO
-    /*
-     * Test Validation rules
-     * Test Author
-     * Test Policy Rules
-     */
 }
