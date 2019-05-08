@@ -20,6 +20,13 @@ class BlogTest extends TestCase
 
         $this->blog = Blog::first();
 
+        $this->blogData = [
+            'title'         => 'title',
+            'body'          => 'body',
+            'subtitle'      => 'subtitle',
+            'introduction'  => 'introduction'
+        ];
+
         Session::start();
     }
 
@@ -52,23 +59,15 @@ class BlogTest extends TestCase
      */
     public function testUserCanCreateNewBlog()
     {
-        $this->assertDatabaseMissing('blog_translations', [
-            'title' => 'title',
-            'body'  => 'body'
-        ]);
+        $this->assertDatabaseMissing('blog_translations', $this->blogData);
 
-        $response = $this->post('blog', array(
-            '_token'    => csrf_token(),
-            'title'     => 'title',
-            'body'      => 'body'
-        ));
+        $this->blogData['_token'] = csrf_token();
+        $response = $this->post('blog', $this->blogData);
 
         $response->assertStatus(Response::HTTP_FOUND);
 
-        $this->assertDatabaseHas('blog_translations', [
-            'title' => 'title',
-            'body'  => 'body'
-        ]);
+        unset($this->blogData['_token']);
+        $this->assertDatabaseHas('blog_translations', $this->blogData);
 
         $response->assertSee('Redirecting');
     }
@@ -94,18 +93,15 @@ class BlogTest extends TestCase
             'body'  => $this->blog->body
         ]);
 
-        $response = $this->put('/blog/' . $this->blog->id , array(
-            '_token'    => csrf_token(),
-            'title'     => 'title_updated',
-            'body'      => 'body_updated'
-        ));
+        $this->blogData['title'] = 'title_updated';
+        $this->blogData['body'] = 'body_updated';
+        $this->blogData['_token'] = csrf_token();
+        $response = $this->put('/blog/' . $this->blog->id , $this->blogData);
 
         $response->assertStatus(Response::HTTP_FOUND);
 
-        $this->assertDatabaseHas('blog_translations', [
-            'title'         => 'title_updated',
-            'body'          => 'body_updated'
-        ]);
+        unset($this->blogData['_token']);
+        $this->assertDatabaseHas('blog_translations', $this->blogData);
 
         $response->assertSee('Redirecting');
     }

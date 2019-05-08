@@ -17,11 +17,28 @@ class BlogJSONTest extends TestCase
 
     protected $blog;
 
+    protected $blogData;
+
+    protected $structure;
+
     public function setUp() : void
     {
         parent::setUp();
 
         $this->blog = Blog::first();
+
+        $this->blogData = [
+            'title'         => 'title',
+            'body'          => 'body',
+            'subtitle'      => 'subtitle',
+            'introduction'  => 'introduction'
+        ];
+
+        $this->structure = [
+            'data' => [
+                'id', 'title', 'subtitle', 'introduction' , 'body' , 'views' , 'author',
+            ]
+        ];
 
         Session::start();
     }
@@ -46,30 +63,19 @@ class BlogJSONTest extends TestCase
      */
     public function testUserCanCreateNewBlogJSON()
     {
-        $this->assertDatabaseMissing('blog_translations', [
-            'title' => 'title',
-            'body'  => 'body'
-        ]);
+        $this->assertDatabaseMissing('blog_translations', $this->blogData);
 
+        $this->blogData['_token'] = csrf_token();
         $response = $this->withHeaders([
             'Accept' => 'Application/json',
-        ])->post('blog', array(
-            '_token'    => csrf_token(),
-            'title'     => 'title',
-            'body'      => 'body'
-        ));
+        ])->post('blog', $this->blogData);
 
         $response->assertStatus(Response::HTTP_CREATED);
 
-        $this->assertDatabaseHas('blog_translations', [
-            'title' => 'title',
-            'body'  => 'body'
-        ]);
+        unset($this->blogData['_token']);
+        $this->assertDatabaseHas('blog_translations', $this->blogData);
 
-        $response->assertJsonStructure([ 'data' => [
-                'id', 'title', 'subtitle', 'introduction' , 'body' , 'views' , 'author',
-            ]
-        ]);
+        $response->assertJsonStructure($this->structure);
     }
 
     /**
@@ -82,10 +88,7 @@ class BlogJSONTest extends TestCase
         ])->get('/blog/' . $this->blog->id);
 
         $response->assertStatus(Response::HTTP_OK);
-        $response->assertJsonStructure([ 'data' => [
-                'id', 'title', 'subtitle', 'introduction' , 'body' , 'views' , 'author',
-            ]
-        ]);
+        $response->assertJsonStructure($this->structure);
     }
 
     /**
@@ -98,25 +101,19 @@ class BlogJSONTest extends TestCase
             'body'  => $this->blog->body
         ]);
 
+        $this->blogData['title'] = 'title_updated';
+        $this->blogData['body'] = 'body_updated';
+        $this->blogData['_token'] = csrf_token();
         $response = $this->withHeaders([
             'Accept' => 'Application/json',
-        ])->put('/blog/' . $this->blog->id , array(
-            '_token'    => csrf_token(),
-            'title'     => 'title_updated',
-            'body'      => 'body_updated'
-        ));
+        ])->put('/blog/' . $this->blog->id , $this->blogData);
 
         $response->assertStatus(Response::HTTP_OK);
 
-        $this->assertDatabaseHas('blog_translations', [
-            'title'         => 'title_updated',
-            'body'          => 'body_updated'
-        ]);
+        unset($this->blogData['_token']);
+        $this->assertDatabaseHas('blog_translations', $this->blogData);
 
-        $response->assertJsonStructure([ 'data' => [
-            'id', 'title', 'subtitle', 'introduction' , 'body' , 'views' , 'author',
-        ]
-        ]);
+        $response->assertJsonStructure($this->structure);
     }
 
     /**
