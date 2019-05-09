@@ -41,4 +41,12 @@ abstract class TestCase extends BaseTestCase
 
         }
     }
+
+    protected function getJsonRequest()
+    {
+
+        return $this->withHeaders([
+            'Accept' => 'Application/json',
+        ]);
+    }
 }

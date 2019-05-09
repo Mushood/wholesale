@@ -31,9 +31,7 @@ class BlogJSONTest extends BlogTestCase
      */
     public function testUserCanRetrieveAllBlogsJSON()
     {
-        $response = $this->withHeaders([
-            'Accept' => 'Application/json',
-        ])->get('/blog');
+        $response = $this->getJsonRequest()->get('/blog');
 
         $response->assertStatus(Response::HTTP_OK);
         $response->assertJsonCount(Controller::PAGINATION, 'data');
@@ -47,9 +45,7 @@ class BlogJSONTest extends BlogTestCase
         $this->assertDatabaseMissing('blog_translations', $this->data);
 
         $this->addCsrfToken();
-        $response = $this->withHeaders([
-            'Accept' => 'Application/json',
-        ])->post('blog', $this->data);
+        $response = $this->getJsonRequest()->post('blog', $this->data);
 
         $response->assertStatus(Response::HTTP_CREATED);
 
@@ -64,9 +60,7 @@ class BlogJSONTest extends BlogTestCase
      */
     public function testUserCanRetrieveABlogJSON()
     {
-        $response   = $this->withHeaders([
-            'Accept' => 'Application/json',
-        ])->get('/blog/' . $this->blog->id);
+        $response   = $this->getJsonRequest()->get('/blog/' . $this->blog->id);
 
         $response->assertStatus(Response::HTTP_OK);
         $response->assertJsonStructure($this->structure);
@@ -87,9 +81,7 @@ class BlogJSONTest extends BlogTestCase
             'body'  => 'body_updated'
         ]);
         $this->addCsrfToken();
-        $response = $this->withHeaders([
-            'Accept' => 'Application/json',
-        ])->put('/blog/' . $this->blog->id , $this->data);
+        $response = $this->getJsonRequest()->put('/blog/' . $this->blog->id , $this->data);
 
         $response->assertStatus(Response::HTTP_OK);
 
@@ -109,9 +101,7 @@ class BlogJSONTest extends BlogTestCase
             'body'  => $this->blog->body
         ]);
 
-        $response   = $this->withHeaders([
-            'Accept' => 'Application/json',
-        ])->delete('/blog/' . $this->blog->id, ['_token' => csrf_token()]);
+        $response   = $this->getJsonRequest()->delete('/blog/' . $this->blog->id, ['_token' => csrf_token()]);
         $response->assertStatus(Response::HTTP_OK);
 
         $this->assertDatabaseMissing('blog_translations', [

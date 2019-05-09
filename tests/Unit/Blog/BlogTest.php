@@ -87,7 +87,7 @@ class BlogTest extends BlogTestCase
 
         $response->assertStatus(Response::HTTP_FOUND);
 
-        unset($this->data['_token']);
+        $this->removeCsrfToken();
         $this->assertDatabaseHas('blog_translations', $this->data);
 
         $response->assertSee('Redirecting');
