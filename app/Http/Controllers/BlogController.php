@@ -5,11 +5,14 @@ namespace App\Http\Controllers;
 use App\Http\Requests\BlogRequest;
 use App\Http\Resources\BlogResource;
 use App\Models\Blog;
+use App\Traits\Publishable;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 
 class BlogController extends Controller
 {
+    use Publishable;
+
     /**
      * Display a listing of the resource.
      *

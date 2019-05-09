@@ -76,6 +76,5 @@ class BlogValidationTest extends BlogTestCase
     /**
      * Policy
      * Add Author
-     * Add Publishable Trait
      */
 }

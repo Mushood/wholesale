@@ -24,6 +24,13 @@ class Blog extends Model
     protected $with = ['translations'];
 
     /**
+     * @var array
+     */
+    protected $casts = [
+        'published'  =>  'boolean',
+    ];
+
+    /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function user()

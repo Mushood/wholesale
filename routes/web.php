@@ -15,4 +15,6 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get('blog/publish/{id}', 'BlogController@publish')->name('blog.publish');
+Route::get('blog/unpublish/{id}', 'BlogController@unpublish')->name('blog.unpublish');
 Route::resource('blog', 'BlogController');
