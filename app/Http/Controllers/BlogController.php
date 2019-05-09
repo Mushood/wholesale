@@ -86,7 +86,7 @@ class BlogController extends Controller
      * @param Blog $blog
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\Http\JsonResponse|\Illuminate\View\View
      */
-    public function edit(BlogRequest $request, Blog $blog)
+    public function edit(Request $request, Blog $blog)
     {
 
         return view('blog.create', compact('blog'));

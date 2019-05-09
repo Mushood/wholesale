@@ -69,6 +69,17 @@ class BlogTest extends BlogTestCase
     }
 
     /**
+     * Access Edit Page
+     */
+    public function testUserCanAccessEditPage()
+    {
+        $response = $this->get("/blog/{$this->blog->id}/edit");
+
+        $response->assertStatus(Response::HTTP_OK);
+        $response->assertSee('Create Blog');
+    }
+
+    /**
      * Update the blog
      */
     public function testUserCanUpdateBlog()
