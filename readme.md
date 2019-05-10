@@ -5,7 +5,6 @@ This project provides an interface to manage selling products in wholesale while
 - Products Management
 - Brands Management
 - Categorisation / Tagging of products
-- User management with Roles (Admin, Wholesaler, Client)
 - Shop Management
 - Catalogue Creation
 - Newsletter Management
@@ -21,9 +20,10 @@ The application is developed in a TDD way to ensure that our code is reliable
 
 ## Features implemented already
 - Blogging (50%) - Missing views and policies (user dependent)
+- User (50%) management with Roles (Admin, Wholesaler, Client) 
 
 ## Features in progress
-- User management with Roles (Admin, Wholesaler, Client)
+- Image management
 
 ## The architecture
 - The admin front end interface will be developed using Vue JS.
