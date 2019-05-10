@@ -11,6 +11,16 @@ class UserTableSeeder extends Seeder
      */
     public function run()
     {
+        \Spatie\Permission\Models\Role::create(['name' => 'admin']);
+        factory(App\Models\User::class, 1)->create()->each(function ($user) {
+            $user->assignRole('admin');
+        });
+
+        \Spatie\Permission\Models\Role::create(['name' => 'wholesaler']);
+        factory(App\Models\User::class, 1)->create()->each(function ($user) {
+            $user->assignRole('wholesaler');
+        });
+
         factory(App\Models\User::class, 10)->create();
     }
 }
