@@ -20,10 +20,10 @@ This project provides an interface to manage selling products in wholesale while
 The application is developed in a TDD way to ensure that our code is reliable
 
 ## Features implemented already
-- NONE
+- Blogging (50%) - Missing views and policies (user dependent)
 
 ## Features in progress
-- Blogging
+- User management with Roles (Admin, Wholesaler, Client)
 
 ## The architecture
 - The admin front end interface will be developed using Vue JS.
