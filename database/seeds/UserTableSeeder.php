@@ -12,12 +12,12 @@ class UserTableSeeder extends Seeder
     public function run()
     {
         \Spatie\Permission\Models\Role::create(['name' => 'admin']);
-        factory(App\Models\User::class, 1)->create()->each(function ($user) {
+        factory(App\Models\User::class, 1)->create(['email' => 'admin@wholesale.com'])->each(function ($user) {
             $user->assignRole('admin');
         });
 
         \Spatie\Permission\Models\Role::create(['name' => 'wholesaler']);
-        factory(App\Models\User::class, 1)->create()->each(function ($user) {
+        factory(App\Models\User::class, 1)->create(['email' => 'wholesaler@wholesale.com'])->each(function ($user) {
             $user->assignRole('wholesaler');
         });
 
