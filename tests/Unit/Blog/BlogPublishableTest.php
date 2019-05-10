@@ -32,6 +32,17 @@ class BlogPublishableTest extends BlogTestCase
 
     public function testBlogCanBePublished()
     {
+        $response   = $this->get('/blog/publish/' . $this->blog->id);
+        $response->assertStatus(Response::HTTP_FOUND);
+        $this->assertEquals(true, $this->blog->fresh()->published);
+
+        $response   = $this->get('/blog/unpublish/' . $this->blog->id);
+        $response->assertStatus(Response::HTTP_FOUND);
+        $this->assertEquals(false, $this->blog->fresh()->published);
+    }
+
+    public function testBlogCanBePublishedJSON()
+    {
         $response   = $this->getJsonRequest()->get('/blog/publish/' . $this->blog->id);
         $response->assertStatus(Response::HTTP_OK);
         $this->assertEquals(true, $this->blog->fresh()->published);
@@ -40,4 +51,14 @@ class BlogPublishableTest extends BlogTestCase
         $response->assertStatus(Response::HTTP_OK);
         $this->assertEquals(false, $this->blog->fresh()->published);
     }
+
+    public function testPublishableTraitThrowsExceptionWhenNoModelFound()
+    {
+        $this->withoutExceptionHandling();
+        $this->expectException(\Exception::class);
+        $this->expectExceptionMessage('No Model found');
+        $response   = $this->getJsonRequest()->get('/unknown/publish/' . $this->blog->id);
+        $response->assertStatus(Response::HTTP_INTERNAL_SERVER_ERROR);
+    }
+
 }
