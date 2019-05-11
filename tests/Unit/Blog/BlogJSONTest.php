@@ -2,6 +2,10 @@
 
 namespace Tests\Unit;
 
+use App\Models\Blog;
+use App\Models\BlogTranslation;
+use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\Storage;
 use Tests\BlogTestCase;
 use Illuminate\Http\Response;
 use App\Http\Controllers\Controller;
@@ -42,16 +46,23 @@ class BlogJSONTest extends BlogTestCase
      */
     public function testUserCanCreateNewBlogJSON()
     {
+        Storage::fake('public');
         $this->assertDatabaseMissing('blog_translations', $this->data);
 
         $this->addCsrfToken();
+
+        $this->data['image'] = UploadedFile::fake()->image('test.jpg');
         $response = $this->getJsonRequest()->post('blog', $this->data);
 
         $response->assertStatus(Response::HTTP_CREATED);
 
+        $blog = BlogTranslation::where('title', $this->data['title'])->first()->blog;
         unset($this->data['_token']);
+        unset($this->data['image']);
         $this->assertDatabaseHas('blog_translations', $this->data);
-
+        Storage::disk('public')->assertExists(
+            $blog->getMedia()[0]->id . '/' . $blog->getMedia()[0]->file_name
+        );
         $response->assertJsonStructure($this->structure);
     }
 
@@ -71,6 +82,7 @@ class BlogJSONTest extends BlogTestCase
      */
     public function testUserCanUpdateBlogJSON()
     {
+        Storage::fake('public');
         $this->assertDatabaseHas('blog_translations', [
             'title' => $this->blog->title,
             'body'  => $this->blog->body
@@ -78,7 +90,8 @@ class BlogJSONTest extends BlogTestCase
 
         $this->overrideData([
             'title' => 'title_updated',
-            'body'  => 'body_updated'
+            'body'  => 'body_updated',
+            'image' => UploadedFile::fake()->image('test1.jpg')
         ]);
         $this->addCsrfToken();
         $response = $this->getJsonRequest()->put('/blog/' . $this->blog->id , $this->data);
@@ -86,8 +99,11 @@ class BlogJSONTest extends BlogTestCase
         $response->assertStatus(Response::HTTP_OK);
 
         unset($this->data['_token']);
+        unset($this->data['image']);
         $this->assertDatabaseHas('blog_translations', $this->data);
-
+        Storage::disk('public')->assertExists(
+            $this->blog->getMedia()[0]->id . '/' . $this->blog->getMedia()[0]->file_name
+        );
         $response->assertJsonStructure($this->structure);
     }
 

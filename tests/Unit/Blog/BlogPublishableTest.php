@@ -3,6 +3,7 @@
 namespace Tests\Unit;
 
 use App\Models\Blog;
+use Illuminate\Http\UploadedFile;
 use Tests\BlogTestCase;
 use Illuminate\Http\Response;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
@@ -22,6 +23,7 @@ class BlogPublishableTest extends BlogTestCase
     public function testBlogNotPublishedByDefault()
     {
         $this->addCsrfToken();
+        $this->data['image'] = UploadedFile::fake()->image('test.jpg');
         $response = $this->getJsonRequest()->post('blog', $this->data);
 
         $content = json_decode($response->getContent(), true);
