@@ -11,6 +11,12 @@ class User extends Authenticatable implements MustVerifyEmail
 {
     use Notifiable, HasRoles;
 
+    const ROLE_ADMIN = 'admin';
+    const ADMIN_EMAIL = 'admin@wholesale.com';
+
+    const ROLE_WHOLESALER = 'wholesaler';
+    const WHOLESALER_EMAIL = 'wholesaler@wholesale.com';
+
     protected $guard_name = 'web';
 
     /**

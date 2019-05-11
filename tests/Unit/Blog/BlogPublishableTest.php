@@ -3,9 +3,11 @@
 namespace Tests\Unit;
 
 use App\Models\Blog;
-use Illuminate\Http\UploadedFile;
+use App\Models\BlogTranslation;
+use App\Models\User;
 use Tests\BlogTestCase;
 use Illuminate\Http\Response;
+use Illuminate\Http\UploadedFile;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 
 class BlogPublishableTest extends BlogTestCase
@@ -27,7 +29,7 @@ class BlogPublishableTest extends BlogTestCase
         $response = $this->getJsonRequest()->post('blog', $this->data);
 
         $content = json_decode($response->getContent(), true);
-        $newBlog = Blog::find($content['data']['id']);
+        $newBlog = Blog::withoutGlobalScopes()->find($content['data']['id']);
 
         $this->assertEquals(false, $newBlog->published);
     }
@@ -63,4 +65,66 @@ class BlogPublishableTest extends BlogTestCase
         $response->assertStatus(Response::HTTP_INTERNAL_SERVER_ERROR);
     }
 
+    public function testUsersUnauthenticatedCannotSeeUnpublishedBlogs()
+    {
+        $data = [
+            'title' => 'published',
+            'body'  => 'published',
+        ];
+        $this->assertDatabaseMissing('blog_translations', $data);
+
+        Blog::create($data);
+
+        $this->assertDatabaseHas('blog_translations', $data);
+
+        //Reload blogs to clear global scope
+        Blog::clearBootedModels();
+
+        $response = $this->get('/blog');
+        $response->assertDontSee($data['title']);
+    }
+
+    public function testUsersNotAdminCannotSeeUnpublishedBlogs()
+    {
+        $data = [
+            'title' => 'published',
+            'body'  => 'published',
+        ];
+        $this->assertDatabaseMissing('blog_translations', $data);
+
+        Blog::create($data);
+
+        $this->assertDatabaseHas('blog_translations', $data);
+
+        //Reload blogs to clear global scope
+        Blog::clearBootedModels();
+
+        $user = User::where('email', User::WHOLESALER_EMAIL)->first();
+        $response = $this->actingAs($user)->get('/blog');
+        $response->assertDontSee($data['title']);
+    }
+
+    public function testUsersAdminCanSeeUnpublishedBlogs()
+    {
+        $this->assertDatabaseMissing('blog_translations', $this->data);
+
+        $this->addCsrfToken();
+        $this->overrideData([
+            'title' => 'published',
+            'body'  => 'published',
+        ]);
+        $this->data['image'] = UploadedFile::fake()->image('test.jpg');
+        $response = $this->post('blog', $this->data);
+
+        $this->removeCsrfToken();
+        unset($this->data['image']);
+        $this->assertDatabaseHas('blog_translations', $this->data);
+
+        //Reload blogs to clear global scope
+        Blog::clearBootedModels();
+
+        $user = User::where('email', User::ADMIN_EMAIL)->first();
+        $response = $this->actingAs($user)->get('/blog?page=1');
+        $response->assertSee($this->data['title']);
+    }
 }

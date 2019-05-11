@@ -3,12 +3,12 @@
 namespace Tests\Unit;
 
 use App\Models\Blog;
-use App\Models\BlogTranslation;
-use Illuminate\Http\UploadedFile;
-use Illuminate\Support\Facades\Storage;
 use Tests\BlogTestCase;
 use Illuminate\Http\Response;
+use App\Models\BlogTranslation;
+use Illuminate\Http\UploadedFile;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 
 class BlogJSONTest extends BlogTestCase
@@ -56,7 +56,8 @@ class BlogJSONTest extends BlogTestCase
 
         $response->assertStatus(Response::HTTP_CREATED);
 
-        $blog = BlogTranslation::where('title', $this->data['title'])->first()->blog;
+        $blogT  = BlogTranslation::where('title', $this->data['title'])->first();
+        $blog   = Blog::withoutGlobalScopes()->find($blogT->blog_id);
         unset($this->data['_token']);
         unset($this->data['image']);
         $this->assertDatabaseHas('blog_translations', $this->data);

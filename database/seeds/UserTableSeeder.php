@@ -11,14 +11,14 @@ class UserTableSeeder extends Seeder
      */
     public function run()
     {
-        \Spatie\Permission\Models\Role::create(['name' => 'admin']);
-        factory(App\Models\User::class, 1)->create(['email' => 'admin@wholesale.com'])->each(function ($user) {
-            $user->assignRole('admin');
+        \Spatie\Permission\Models\Role::create(['name' => \App\Models\User::ROLE_ADMIN]);
+        factory(App\Models\User::class, 1)->create(['email' => \App\Models\User::ADMIN_EMAIL])->each(function ($user) {
+            $user->assignRole(\App\Models\User::ROLE_ADMIN);
         });
 
-        \Spatie\Permission\Models\Role::create(['name' => 'wholesaler']);
-        factory(App\Models\User::class, 1)->create(['email' => 'wholesaler@wholesale.com'])->each(function ($user) {
-            $user->assignRole('wholesaler');
+        \Spatie\Permission\Models\Role::create(['name' => \App\Models\User::ROLE_WHOLESALER]);
+        factory(App\Models\User::class, 1)->create(['email' => \App\Models\User::WHOLESALER_EMAIL])->each(function ($user) {
+            $user->assignRole(\App\Models\User::ROLE_WHOLESALER);
         });
 
         factory(App\Models\User::class, 10)->create();
