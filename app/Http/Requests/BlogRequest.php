@@ -24,10 +24,11 @@ class BlogRequest extends FormRequest
     public function rules()
     {
         return [
-            'title'         => 'required',
-            'subtitle'      => 'nullable',
-            'introduction'  => 'nullable',
-            'body'          => 'required'
+            'title'         => 'required|max:255',
+            'subtitle'      => 'nullable|max:255',
+            'introduction'  => 'nullable|max:255',
+            'body'          => 'required',
+            'image'         => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ];
     }
 }

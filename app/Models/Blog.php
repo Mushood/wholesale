@@ -4,10 +4,12 @@ namespace App\Models;
 
 use Dimsav\Translatable\Translatable;
 use Illuminate\Database\Eloquent\Model;
+use Spatie\MediaLibrary\HasMedia\HasMedia;
+use Spatie\MediaLibrary\HasMedia\HasMediaTrait;
 
-class Blog extends Model
+class Blog extends Model implements HasMedia
 {
-    use Translatable;
+    use Translatable, HasMediaTrait;
 
     /**
      * The attributes that are translated.
@@ -15,7 +17,7 @@ class Blog extends Model
      * @var array
      */
     public $translatedAttributes = [
-        'title', 'subtitle', 'meta_description', 'introduction', 'body'
+        'title', 'subtitle', 'meta_description', 'introduction', 'body', 'image'
     ];
 
     /**

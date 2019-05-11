@@ -53,6 +53,7 @@ class BlogController extends Controller
         $validated = $request->validated();
 
         $blog = Blog::create($validated);
+        $blog->addMedia($validated['image'])->toMediaCollection();
 
         if ($request->wantsJson()) {
 
@@ -104,6 +105,7 @@ class BlogController extends Controller
         $validated = $request->validated();
 
         $blog->update($validated);
+        $blog->addMedia($validated['image'])->toMediaCollection();
 
         if ($request->wantsJson()) {
 
@@ -129,7 +131,6 @@ class BlogController extends Controller
 
             return response()->json([] , Response::HTTP_OK);
         }
-
 
         return redirect()->route('blog.index');
     }

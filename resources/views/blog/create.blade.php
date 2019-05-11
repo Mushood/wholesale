@@ -3,7 +3,7 @@
 @section('content')
     <h3>Create Blog</h3>
 
-    <form method="POST" action="{{ route('blog.store') }}">
+    <form method="POST" action="{{ route('blog.store') }}" enctype="multipart/form-data">
         {{ csrf_field() }}
         <div class="form-group">
             <label for="title">Title</label>
@@ -20,6 +20,10 @@
         <div class="form-group">
             <label for="body">Body</label>
             <textarea class="form-control" id="body" name="body" rows="3" placeholder="body"></textarea>
+        </div>
+        <div class="form-group">
+            <label for="image">File</label>
+            <input type="file" class="form-control" id="image" name="image" placeholder="image">
         </div>
         <button type="submit" class="btn btn-primary mb-2">Submit</button>
     </form>
