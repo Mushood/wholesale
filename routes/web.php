@@ -23,6 +23,8 @@ Route::get('blog/publish/{id}', 'BlogController@publish')->name('blog.publish');
 Route::get('blog/unpublish/{id}', 'BlogController@unpublish')->name('blog.unpublish');
 Route::resource('blog', 'BlogController');
 
+Route::resource('temporaryUpload', 'TemporaryUploadController');
+
 
 //For testing purposes only
 Route::get('unknown/publish/{id}', 'BlogController@publish')->name('unknown.publish');
