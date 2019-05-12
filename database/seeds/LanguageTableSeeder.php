@@ -12,7 +12,7 @@ class LanguageTableSeeder extends Seeder
     public function run()
     {
         // File obtained from https://gist.github.com/piraveen/fafd0d984b2236e809d03a0e306c8a4d
-        $filePath = storage_path('app/' . \App\Models\Language::LANGUAGE_SEED_FILE);
+        $filePath = storage_path('app/' . \App\Models\Language::SEED_FILE);
 
         if (file_exists($filePath)) {
             // Read JSON file
