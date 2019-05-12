@@ -6,13 +6,13 @@ This project provides an interface to manage selling products in wholesale while
 - User management
 - Image management
 - Internationalization (Currency / Language)
-- Products Management
-- Brands Management
 - Categorisation / Tagging of products
+- Brands Management
 - Shop Management
+- Products Management
+- Cart System
 - Catalogue Creation
 - Newsletter Management
-- Cart System
 - Wishlist 
 - Ratings
 - CSV/Excel Export
@@ -20,13 +20,12 @@ This project provides an interface to manage selling products in wholesale while
 The application is developed in a TDD way to ensure that our code is reliable
 
 ## Features implemented already
-- Blogging (50%) - Missing views and policies (user dependent)
+- Blogging with image,published scope (50%) - Missing views and policies (user dependent)
 - User management(50%)  with Roles (Admin, Wholesaler, Client) 
 - Image management(50%) 
 
 ## Features in progress
-- Adding images to blogs
-- Filter publish scope to blog model
+- Internationalization (Currency / Language)
 
 ## The architecture
 - The admin front end interface will be developed using Vue JS.
