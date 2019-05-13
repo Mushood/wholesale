@@ -3,6 +3,7 @@
 namespace App\Traits;
 
 use App\Models\Blog;
+use App\Models\Category;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -62,6 +63,10 @@ trait Publishable
 
         if (Str::contains($url, 'blog')) {
             $model = Blog::find($id);
+        }
+
+        if (Str::contains($url, 'category')) {
+            $model = Category::find($id);
         }
 
         if ($model === null) {
