@@ -24,9 +24,12 @@ The application is developed in a TDD way to ensure that our code is reliable
 - User management(50%)  with Roles (Admin, Wholesaler, Client) 
 - Image management(50%) 
 - Internationalization (Currency / Language / Country)
+- Categorisation / Tagging of products
 
 ## Features in progress
-- Categorisation / Tagging of products
+- Blog can be categorised
+- Base Controller refactor
+- Base Test refactor
 
 ## The architecture
 - The admin front end interface will be developed using Vue JS.
