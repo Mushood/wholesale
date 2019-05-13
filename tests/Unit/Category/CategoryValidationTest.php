@@ -24,14 +24,33 @@ class CategoryValidationTest extends CategoryTestCase
         $this->assertDatabaseMissing('category_translations', $this->data);
 
         $this->addCSRFTokenAndUnsetField('title');
+        $this->data['type'] = 'category';
         $response = $this->post('category', $this->data);
 
         $response->assertStatus(Response::HTTP_FOUND);
 
         $this->removeCsrfToken();
+        unset($this->data['type']);
         $this->assertDatabaseMissing('category_translations', $this->data);
 
         $response->assertSee('Redirecting');
+    }
+
+    /**
+     * Store new category
+     */
+    public function testCategoryRequiresType()
+    {
+        unset($this->data['type']);
+        $this->assertDatabaseMissing('category_translations', $this->data);
+
+        $response = $this->post('category', $this->data);
+
+        $response->assertStatus(419);
+
+        $this->assertDatabaseMissing('category_translations', $this->data);
+
+        $response->assertSee('Page Expired');
     }
 
     /**
@@ -42,10 +61,12 @@ class CategoryValidationTest extends CategoryTestCase
         unset($this->data['type']);
         $this->assertDatabaseMissing('category_translations', $this->data);
 
+        $this->data['type'] = 'category';
         $response = $this->post('category', $this->data);
 
         $response->assertStatus(419);
 
+        unset($this->data['type']);
         $this->assertDatabaseMissing('category_translations', $this->data);
 
         $response->assertSee('Page Expired');
