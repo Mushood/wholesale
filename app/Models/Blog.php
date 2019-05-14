@@ -13,6 +13,7 @@ class Blog extends Model implements HasMedia
 {
     use Translatable, HasMediaTrait;
 
+    protected $fillable =['image'];
     /**
      * The "booting" method of the model.
      *
@@ -33,7 +34,7 @@ class Blog extends Model implements HasMedia
      * @var array
      */
     public $translatedAttributes = [
-        'title', 'subtitle', 'meta_description', 'introduction', 'body', 'image'
+        'title', 'subtitle', 'meta_description', 'introduction', 'body'
     ];
 
     /**

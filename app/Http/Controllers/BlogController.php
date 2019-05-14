@@ -47,8 +47,10 @@ class BlogController extends BaseController
     {
         $validated = $request->validated();
 
+        $image = $validated['image'];
+        unset($validated['image']);
         $blog = Blog::create($validated);
-        $blog->addMedia($validated['image'])->toMediaCollection();
+        $blog->addMedia($image)->toMediaCollection();
 
         if ($request->wantsJson()) {
 
@@ -69,8 +71,10 @@ class BlogController extends BaseController
     {
         $validated = $request->validated();
 
+        $image = $validated['image'];
+        unset($validated['image']);
         $blog->update($validated);
-        $blog->addMedia($validated['image'])->toMediaCollection();
+        $blog->addMedia($image)->toMediaCollection();
 
         if ($request->wantsJson()) {
 
