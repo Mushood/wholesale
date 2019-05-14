@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use App\Models\Blog;
 use App\Models\Shop;
+use App\Models\User;
 use App\Models\Brand;
 use App\Models\Category;
 use Illuminate\Support\Facades\Route;
@@ -29,6 +30,7 @@ class RouteServiceProvider extends ServiceProvider
     {
         Route::model('blog', Blog::class);
         Route::model('shop', Shop::class);
+        Route::model('user', User::class);
         Route::model('brand', Brand::class);
         Route::model('category', Category::class);
 

@@ -29,6 +29,7 @@ Route::resource('brand', 'BrandController');
 
 Route::get('shop/publish/{shop}', 'ShopController@publish')->name('shop.publish');
 Route::get('shop/unpublish/{shop}', 'ShopController@unpublish')->name('shop.unpublish');
+Route::get('shop/{shop}/user/{user}', 'ShopController@assignUser')->name('shop.assign.user');
 Route::resource('shop', 'ShopController');
 
 Route::get('category/publish/{category}', 'CategoryController@publish')->name('category.publish');

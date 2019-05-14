@@ -6,6 +6,8 @@ use App\Models\Shop;
 use App\Traits\Publishable;
 use App\Http\Requests\ShopRequest;
 use App\Http\Resources\ShopResource;
+use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 
 class ShopController extends BaseController
 {
@@ -81,6 +83,19 @@ class ShopController extends BaseController
         }
 
         return redirect()->route('shop.index');
+    }
+
+    public function assignUser(Request $request, $shop, $user)
+    {
+        $user->shop_id = $shop->id;
+        $user->save();
+
+        if ($request->wantsJson()) {
+
+            return response()->json([] , Response::HTTP_OK);
+        }
+
+        return redirect()->route($this->viewFolder . '.index');
     }
 
 }

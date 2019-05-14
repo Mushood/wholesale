@@ -2,6 +2,7 @@
 
 namespace Tests\Unit;
 
+use App\Models\Shop;
 use App\Models\User;
 use Illuminate\Auth\Notifications\VerifyEmail;
 use Illuminate\Http\Response;
@@ -132,5 +133,25 @@ class UserTest extends BaseTestCase
 
         $response->assertStatus(Response::HTTP_OK);
         $response->assertSee('Reset Password');
+    }
+
+    public function testUserCanBeAssignedShop()
+    {
+        $user = User::where('shop_id', null)->first();
+        $shop = Shop::first();
+        $response = $this->get('/shop/' . $shop->id .'/user/' . $user->id);
+
+        $response->assertStatus(Response::HTTP_FOUND);
+        $this->assertEquals($shop->id, $user->fresh()->shop_id);
+    }
+
+    public function testUserCanBeAssignedShopJSON()
+    {
+        $user = User::where('shop_id', null)->first();
+        $shop = Shop::first();
+        $response = $this->getJsonRequest()->get('/shop/' . $shop->id .'/user/' . $user->id);
+
+        $response->assertStatus(Response::HTTP_OK);
+        $this->assertEquals($shop->id, $user->fresh()->shop_id);
     }
 }
