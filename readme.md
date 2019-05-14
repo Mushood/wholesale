@@ -20,7 +20,7 @@ This project provides an interface to manage selling products in wholesale while
 The application is developed in a TDD way to ensure that our code is reliable
 
 ## Features implemented already
-- Blogging with image,published scope (50%) - Missing views and policies (user dependent)
+- Blogging with image,published scope, categorisable (70%) - Missing views and policies (user dependent)
 - User management(50%)  with Roles (Admin, Wholesaler, Client) 
 - Image management(50%) 
 - Internationalization (Currency / Language / Country)
@@ -30,8 +30,9 @@ The application is developed in a TDD way to ensure that our code is reliable
 - Base Controller
 
 ## Features in progress
-- Blog can be categorised
-- Base Test refactor
+- Brands Management
+
+## Improvements
 - Abstract Internationalization into a package
 
 ## The architecture
