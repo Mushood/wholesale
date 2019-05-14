@@ -12,13 +12,11 @@ trait Publishable
 {
     /**
      * @param Request $request
-     * @param $id
-     * @return RedirectResponse
-     * @throws \Exception
+     * @param $model
+     * @return \Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse
      */
-    public function publish(Request $request, $id)
+    public function publish(Request $request, $model)
     {
-        $model = $this->getModel($request, $id);
         $model->published = true;
         $model->save();
 
@@ -36,9 +34,8 @@ trait Publishable
      * @return RedirectResponse
      * @throws \Exception
      */
-    public function unpublish(Request $request, $id)
+    public function unpublish(Request $request, $model)
     {
-        $model = $this->getModel($request, $id);
         $model->published = false;
         $model->save();
 
@@ -48,31 +45,5 @@ trait Publishable
         }
 
         return redirect()->back();
-    }
-
-    /**
-     * @param $request
-     * @param $id
-     * @return |null
-     * @throws \Exception
-     */
-    public function getModel($request, $id)
-    {
-        $url    = $request->getPathInfo();
-        $model  = null;
-
-        if (Str::contains($url, 'blog')) {
-            $model = Blog::find($id);
-        }
-
-        if (Str::contains($url, 'category')) {
-            $model = Category::find($id);
-        }
-
-        if ($model === null) {
-            throw new \Exception('No Model found');
-        }
-
-        return $model;
     }
 }

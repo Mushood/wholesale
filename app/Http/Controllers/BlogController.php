@@ -7,39 +7,43 @@ use App\Http\Resources\BlogResource;
 use App\Models\Blog;
 use App\Traits\Publishable;
 use Illuminate\Http\Request;
-use Illuminate\Http\Response;
 
-class BlogController extends Controller
+class BlogController extends BaseController
 {
     use Publishable;
 
-    /**
-     * Display a listing of the resource.
-     *
-     * @param Request $request
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Http\JsonResponse|\Illuminate\View\View
-     */
-    public function index(Request $request)
+    public function __construct()
     {
-        $blogs = Blog::latest()->paginate(SELF::PAGINATION);
-
-        if ($request->wantsJson()) {
-
-            return BlogResource::collection($blogs);
-        }
-
-        return view('blog.index', compact('blogs'));
+        $this->setClassModel();
+        $this->setClassResource();
+        $this->setViewFolder();
+        $this->setVariableNameSingular();
+        $this->setVariableNamePlural();
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
-     */
-    public function create()
+    public function setClassModel()
     {
+        $this->className = Blog::class;
+    }
 
-        return view('blog.create');
+    public function setClassResource()
+    {
+        $this->classResource = BlogResource::class;
+    }
+
+    public function setViewFolder()
+    {
+        $this->viewFolder = 'blog';
+    }
+
+    public function setVariableNameSingular()
+    {
+        $this->variableNameSingular = 'blog';
+    }
+
+    public function setVariableNamePlural()
+    {
+        $this->variableNamePlural = 'blogs';
     }
 
     /**
@@ -64,36 +68,6 @@ class BlogController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     *
-     * @param Request $request
-     * @param Blog $blog
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Http\JsonResponse|\Illuminate\View\View
-     */
-    public function show(Request $request, Blog $blog)
-    {
-        if ($request->wantsJson()) {
-
-            return new BlogResource($blog);
-        }
-
-        return view('blog.show', compact('blog'));
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param BlogRequest $request
-     * @param Blog $blog
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Http\JsonResponse|\Illuminate\View\View
-     */
-    public function edit(Request $request, Blog $blog)
-    {
-
-        return view('blog.create', compact('blog'));
-    }
-
-    /**
      * Update the specified resource in storage.
      *
      * @param Request $request
@@ -115,23 +89,4 @@ class BlogController extends Controller
         return redirect()->route('blog.index');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param Request $request
-     * @param Blog $blog
-     * @return \Illuminate\Http\RedirectResponse
-     * @throws \Exception
-     */
-    public function destroy(Request $request, Blog $blog)
-    {
-        $blog->delete();
-
-        if ($request->wantsJson()) {
-
-            return response()->json([] , Response::HTTP_OK);
-        }
-
-        return redirect()->route('blog.index');
-    }
 }
