@@ -14,6 +14,7 @@ class Blog extends Model implements HasMedia
     use Translatable, HasMediaTrait;
 
     protected $fillable =['image', 'category_id'];
+
     /**
      * The "booting" method of the model.
      *

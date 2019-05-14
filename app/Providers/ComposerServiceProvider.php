@@ -26,7 +26,7 @@ class ComposerServiceProvider extends ServiceProvider
     {
         view()->composer('blog.create', function ($view) {
             $view->with([
-                'categories' => Category::all()
+                'categories' => Category::where('type', 'category')->get()
             ]);
         });
     }
