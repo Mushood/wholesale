@@ -67,7 +67,7 @@ class BlogController extends BaseController
      * @param Blog $blog
      * @return \Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse
      */
-    public function update(BlogRequest $request, Blog $blog)
+    public function update(BlogRequest $request, $blog)
     {
         $validated = $request->validated();
 

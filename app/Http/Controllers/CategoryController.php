@@ -67,7 +67,7 @@ class CategoryController extends BaseController
      * @param Blog $blog
      * @return \Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse
      */
-    public function update(CategoryRequest $request, Category $category)
+    public function update(CategoryRequest $request, $category)
     {
         $validated = $request->validated();
 
