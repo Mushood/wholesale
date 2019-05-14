@@ -8,11 +8,12 @@ use Illuminate\Support\Facades\Auth;
 use Spatie\MediaLibrary\HasMedia\HasMedia;
 use Spatie\MediaLibrary\HasMedia\HasMediaTrait;
 
-class Brand extends Model implements HasMedia
+class Shop extends Model implements HasMedia
 {
     use HasMediaTrait;
 
-    protected $fillable =['image', 'title'];
+    protected $fillable =['image', 'title', 'ref'];
+
 
     /**
      * The "booting" method of the model.
@@ -23,7 +24,9 @@ class Brand extends Model implements HasMedia
     {
         parent::boot();
 
-        if (!Auth::user() || !Auth::user()->hasRole('admin')) {
+        if (
+            (!Auth::user() || !Auth::user()->hasRole('admin'))
+        ) {
             static::addGlobalScope(new PublishedScope());
         }
     }
@@ -34,12 +37,4 @@ class Brand extends Model implements HasMedia
     protected $casts = [
         'published'  =>  'boolean',
     ];
-
-    /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
-     */
-    public function users()
-    {
-        return $this->hasMany('App\Models\User');
-    }
 }

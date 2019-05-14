@@ -27,6 +27,10 @@ Route::get('brand/publish/{brand}', 'BrandController@publish')->name('brand.publ
 Route::get('brand/unpublish/{brand}', 'BrandController@unpublish')->name('brand.unpublish');
 Route::resource('brand', 'BrandController');
 
+Route::get('shop/publish/{shop}', 'ShopController@publish')->name('shop.publish');
+Route::get('shop/unpublish/{shop}', 'ShopController@unpublish')->name('shop.unpublish');
+Route::resource('shop', 'ShopController');
+
 Route::get('category/publish/{category}', 'CategoryController@publish')->name('category.publish');
 Route::get('category/unpublish/{category}', 'CategoryController@unpublish')->name('category.unpublish');
 Route::resource('category', 'CategoryController');
