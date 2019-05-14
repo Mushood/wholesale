@@ -29,7 +29,7 @@ class BlogPublishableTest extends BlogTestCase
         $response = $this->getJsonRequest()->post('blog', $this->data);
 
         $content = json_decode($response->getContent(), true);
-        $newBlog = Blog::withoutGlobalScopes()->find($content['data']['id']);
+        $newBlog = Blog::withoutGlobalScopes()->latest()->first();
 
         $this->assertEquals(false, $newBlog->published);
     }

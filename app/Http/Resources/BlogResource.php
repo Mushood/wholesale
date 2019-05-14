@@ -15,7 +15,6 @@ class BlogResource extends JsonResource
     public function toArray($request)
     {
         return [
-            'id'            => $this->id,
             'title'         => $this->title,
             'subtitle'      => $this->subtitle,
             'introduction'  => $this->introduction,

@@ -23,7 +23,7 @@ class BlogJSONTest extends BlogTestCase
 
         $this->structure = [
             'data' => [
-                'id', 'title', 'subtitle', 'introduction' , 'body' , 'views' , 'author', 'category'
+                'title', 'subtitle', 'introduction' , 'body' , 'views' , 'author', 'category'
             ]
         ];
     }
