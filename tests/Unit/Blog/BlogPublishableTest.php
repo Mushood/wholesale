@@ -97,6 +97,9 @@ class BlogPublishableTest extends BlogTestCase
 
     public function testUsersAdminCanSeeUnpublishedBlogs()
     {
+        $this->overrideData([
+            'category_id'    => null
+        ]);
         $this->assertDatabaseMissing('blog_translations', $this->data);
 
         $this->addCsrfToken();

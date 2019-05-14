@@ -49,6 +49,9 @@ class BlogTest extends BlogTestCase
     public function testUserCanCreateNewBlog()
     {
         Storage::fake('public');
+        $this->overrideData([
+            'category_id'    => null
+        ]);
         $this->assertDatabaseMissing('blog_translations', $this->data);
 
         $this->addCsrfToken();
@@ -60,7 +63,9 @@ class BlogTest extends BlogTestCase
         $this->removeCsrfToken();
         $blogT  = BlogTranslation::where('title', $this->data['title'])->first();
         $blog   = Blog::withoutGlobalScopes()->find($blogT->blog_id);
-        unset($this->data['image']);
+        $this->overrideData([
+            'image'    => null
+        ]);
         $this->assertDatabaseHas('blog_translations', $this->data);
         Storage::disk('public')->assertExists(
             $blog->getMedia()[0]->id . '/' . $blog->getMedia()[0]->file_name
@@ -114,7 +119,10 @@ class BlogTest extends BlogTestCase
         $response->assertStatus(Response::HTTP_FOUND);
 
         $this->removeCsrfToken();
-        unset($this->data['image']);
+        $this->overrideData([
+            'image'          => null,
+            'category_id'    => null
+        ]);
         $this->assertDatabaseHas('blog_translations', $this->data);
         Storage::disk('public')->assertExists(
             $this->blog->getMedia()[0]->id . '/' . $this->blog->getMedia()[0]->file_name

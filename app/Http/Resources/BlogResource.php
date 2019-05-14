@@ -22,6 +22,7 @@ class BlogResource extends JsonResource
             'body'          => $this->body,
             'views'         => $this->views,
             'author'        => $this->user()->exists() ? $this->user->name : "Anonymous",
+            'category'      => $this->category != null ? $this->category->title : null,
         ];
     }
 }

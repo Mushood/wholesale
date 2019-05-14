@@ -17,6 +17,8 @@ class CreateBlogsTable extends Migration
             $table->increments('id');
             $table->integer('views')->default(0);
             $table->boolean('published')->default(false);
+            $table->integer('category_id')->unsigned()->nullable();
+            $table->foreign('category_id')->references('id')->on('categories');
             $table->integer('user_id')->unsigned()->nullable();
             $table->foreign('user_id')->references('id')->on('users');
             $table->timestamps();

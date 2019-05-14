@@ -13,7 +13,7 @@ class Blog extends Model implements HasMedia
 {
     use Translatable, HasMediaTrait;
 
-    protected $fillable =['image'];
+    protected $fillable =['image', 'category_id'];
     /**
      * The "booting" method of the model.
      *
@@ -63,5 +63,13 @@ class Blog extends Model implements HasMedia
     public function translation()
     {
         return $this->hasOne('App\Models\BlogTranslation');
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function category()
+    {
+        return $this->belongsTo('App\Models\Category');
     }
 }

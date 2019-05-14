@@ -29,6 +29,7 @@ class BlogRequest extends FormRequest
             'introduction'  => 'nullable|max:255',
             'body'          => 'required',
             'image'         => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'category_id'   => 'nullable',
         ];
     }
 }

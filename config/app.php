@@ -176,6 +176,10 @@ return [
         App\Providers\RouteServiceProvider::class,
         Dimsav\Translatable\TranslatableServiceProvider::class,
 
+        /*
+         * Custom Service Providers...
+         */
+        App\Providers\ComposerServiceProvider::class,
     ],
 
     /*

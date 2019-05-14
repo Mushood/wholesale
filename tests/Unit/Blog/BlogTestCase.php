@@ -3,6 +3,7 @@
 namespace Tests;
 
 use App\Models\Blog;
+use App\Models\Category;
 use Illuminate\Support\Facades\Session;
 use Tests\TestCase as BaseTestCase;
 
@@ -28,7 +29,8 @@ abstract class BlogTestCase extends BaseTestCase
             'title'         => 'title',
             'body'          => 'body',
             'subtitle'      => 'subtitle',
-            'introduction'  => 'introduction'
+            'introduction'  => 'introduction',
+            'category_id'   => Category::where('published', true)->first()->id,
         ];
     }
 }

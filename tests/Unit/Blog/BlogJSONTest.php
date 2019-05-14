@@ -23,7 +23,7 @@ class BlogJSONTest extends BlogTestCase
 
         $this->structure = [
             'data' => [
-                'id', 'title', 'subtitle', 'introduction' , 'body' , 'views' , 'author',
+                'id', 'title', 'subtitle', 'introduction' , 'body' , 'views' , 'author', 'category'
             ]
         ];
     }
@@ -47,6 +47,9 @@ class BlogJSONTest extends BlogTestCase
     public function testUserCanCreateNewBlogJSON()
     {
         Storage::fake('public');
+        $this->overrideData([
+            'category_id'    => null
+        ]);
         $this->assertDatabaseMissing('blog_translations', $this->data);
 
         $this->addCsrfToken();
@@ -58,8 +61,10 @@ class BlogJSONTest extends BlogTestCase
 
         $blogT  = BlogTranslation::where('title', $this->data['title'])->first();
         $blog   = Blog::withoutGlobalScopes()->find($blogT->blog_id);
-        unset($this->data['_token']);
-        unset($this->data['image']);
+        $this->removeCsrfToken();
+        $this->overrideData([
+           'image'          => null,
+        ]);
         $this->assertDatabaseHas('blog_translations', $this->data);
         Storage::disk('public')->assertExists(
             $blog->getMedia()[0]->id . '/' . $blog->getMedia()[0]->file_name
@@ -99,8 +104,11 @@ class BlogJSONTest extends BlogTestCase
 
         $response->assertStatus(Response::HTTP_OK);
 
-        unset($this->data['_token']);
-        unset($this->data['image']);
+        $this->removeCsrfToken();
+        $this->overrideData([
+            'image'          => null,
+            'category_id'    => null
+        ]);
         $this->assertDatabaseHas('blog_translations', $this->data);
         Storage::disk('public')->assertExists(
             $this->blog->getMedia()[0]->id . '/' . $this->blog->getMedia()[0]->file_name

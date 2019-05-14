@@ -13,6 +13,10 @@ class BlogValidationTest extends BlogTestCase
     public function setUp() : void
     {
         parent::setUp();
+
+        $this->overrideData([
+            'category_id'    => null
+        ]);
     }
 
     /**
@@ -20,6 +24,7 @@ class BlogValidationTest extends BlogTestCase
      */
     public function testBlogRequiresTitle()
     {
+
         $this->assertDatabaseMissing('blog_translations', $this->data);
 
         $this->addCSRFTokenAndUnsetField('title');

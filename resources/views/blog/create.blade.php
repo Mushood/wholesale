@@ -22,6 +22,14 @@
             <textarea class="form-control" id="body" name="body" rows="3" placeholder="body"></textarea>
         </div>
         <div class="form-group">
+            <label for="type">Type</label>
+            <select class="form-control" id="type" name="type">
+                @foreach($categories as $key => $category)
+                    <option value="{{ $category->id }}">{{ $category->title }}</option>
+                @endforeach
+            </select>
+        </div>
+        <div class="form-group">
             <label for="image">File</label>
             <input type="file" class="form-control" id="image" name="image" placeholder="image">
         </div>
