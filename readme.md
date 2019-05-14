@@ -25,12 +25,13 @@ The application is developed in a TDD way to ensure that our code is reliable
 - Image management(50%) 
 - Internationalization (Currency / Language / Country)
 - Categorisation / Tagging of products
+- Brands Management(50%)
 
 ## Interesting Features
 - Base Controller
 
 ## Features in progress
-- Brands Management
+- Shop Management
 
 ## Improvements
 - Abstract Internationalization into a package
