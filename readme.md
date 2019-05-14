@@ -11,11 +11,11 @@ This project provides an interface to manage selling products in wholesale while
 - Shop Management
 - Products Management
 - Cart System
-- Catalogue Creation
 - Newsletter Management
 - Wishlist 
 - Ratings
 - CSV/Excel Export
+- Catalogue Creation
 
 The application is developed in a TDD way to ensure that our code is reliable
 
@@ -26,10 +26,13 @@ The application is developed in a TDD way to ensure that our code is reliable
 - Internationalization (Currency / Language / Country)
 - Categorisation / Tagging of products
 
+## Interesting Features
+- Base Controller
+
 ## Features in progress
 - Blog can be categorised
-- Base Controller refactor
 - Base Test refactor
+- Abstract Internationalization into a package
 
 ## The architecture
 - The admin front end interface will be developed using Vue JS.
