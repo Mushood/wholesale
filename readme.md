@@ -11,11 +11,14 @@ This project provides an interface to manage selling products in wholesale while
 - Shop Management
 - Products Management
 - Cart System
+- Paypal Payment System
+______________________________
 - Newsletter Management
 - Wishlist 
 - Ratings
 - CSV/Excel Export
 - Catalogue Creation
+- SEO Optimization
 
 The application is developed in a TDD way to ensure that our code is reliable
 
@@ -26,12 +29,13 @@ The application is developed in a TDD way to ensure that our code is reliable
 - Internationalization (Currency / Language / Country)
 - Categorisation / Tagging of products
 - Brands Management(50%)
+- Shop Management(50%)
 
 ## Interesting Features
 - Base Controller
 
 ## Features in progress
-- Shop Management
+- Products Management
 
 ## Improvements
 - Abstract Internationalization into a package
