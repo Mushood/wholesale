@@ -54,13 +54,4 @@ class CategoryPublishableTest extends CategoryTestCase
         $response->assertStatus(Response::HTTP_OK);
         $this->assertEquals(false, $this->category->fresh()->published);
     }
-
-    public function testPublishableTraitThrowsExceptionWhenNoModelFound()
-    {
-        $this->withoutExceptionHandling();
-        $this->expectException(\Exception::class);
-        $this->expectExceptionMessage("Attempt to assign property 'published' of non-object");
-        $response   = $this->getJsonRequest()->get('/unknown/publish/' . $this->category->id);
-        $response->assertStatus(Response::HTTP_INTERNAL_SERVER_ERROR);
-    }
 }

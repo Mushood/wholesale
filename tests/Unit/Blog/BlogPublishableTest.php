@@ -56,15 +56,6 @@ class BlogPublishableTest extends BlogTestCase
         $this->assertEquals(false, $this->blog->fresh()->published);
     }
 
-    public function testPublishableTraitThrowsExceptionWhenNoModelFound()
-    {
-        $this->withoutExceptionHandling();
-        $this->expectException(\Exception::class);
-        $this->expectExceptionMessage("Attempt to assign property 'published' of non-object");
-        $response   = $this->getJsonRequest()->get('/unknown/publish/' . $this->blog->id);
-        $response->assertStatus(Response::HTTP_INTERNAL_SERVER_ERROR);
-    }
-
     public function testUsersUnauthenticatedCannotSeeUnpublishedBlogs()
     {
         $data = [
