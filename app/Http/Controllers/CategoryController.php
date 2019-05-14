@@ -9,33 +9,33 @@ use App\Traits\Publishable;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 
-class CategoryController extends Controller
+class CategoryController extends BaseController
 {
     use Publishable;
 
-    /**
-     * @param Request $request
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Http\Resources\Json\AnonymousResourceCollection|\Illuminate\View\View
-     */
-    public function index(Request $request)
+    public function setClassModel()
     {
-        $categories = Category::latest()->paginate(SELF::PAGINATION);
-
-        if ($request->wantsJson()) {
-
-            return CategoryResource::collection($categories);
-        }
-
-        return view('category.index', compact('categories'));
+        $this->className = Category::class;
     }
 
-    /**
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
-     */
-    public function create()
+    public function setClassResource()
     {
+        $this->classResource = CategoryResource::class;
+    }
 
-        return view('category.create');
+    public function setViewFolder()
+    {
+        $this->viewFolder = 'category';
+    }
+
+    public function setVariableNameSingular()
+    {
+        $this->variableNameSingular = 'category';
+    }
+
+    public function setVariableNamePlural()
+    {
+        $this->variableNamePlural = 'categories';
     }
 
 
@@ -61,32 +61,6 @@ class CategoryController extends Controller
     }
 
     /**
-     * @param Request $request
-     * @param Category $category
-     * @return CategoryResource|\Illuminate\Contracts\View\Factory|\Illuminate\View\View
-     */
-    public function show(Request $request, Category $category)
-    {
-        if ($request->wantsJson()) {
-
-            return new CategoryResource($category);
-        }
-
-        return view('category.show', compact('category'));
-    }
-
-    /**
-     * @param Request $request
-     * @param Category $category
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
-     */
-    public function edit(Request $request, Category $category)
-    {
-
-        return view('category.create', compact('category'));
-    }
-
-    /**
      * Update the specified resource in storage.
      *
      * @param Request $request
@@ -105,24 +79,6 @@ class CategoryController extends Controller
         if ($request->wantsJson()) {
 
             return new CategoryResource($category);
-        }
-
-        return redirect()->route('category.index');
-    }
-
-    /**
-     * @param Request $request
-     * @param Category $category
-     * @return \Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse
-     * @throws \Exception
-     */
-    public function destroy(Request $request, Category $category)
-    {
-        $category->delete();
-
-        if ($request->wantsJson()) {
-
-            return response()->json([] , Response::HTTP_OK);
         }
 
         return redirect()->route('category.index');

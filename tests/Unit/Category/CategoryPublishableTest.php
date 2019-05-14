@@ -59,7 +59,7 @@ class CategoryPublishableTest extends CategoryTestCase
     {
         $this->withoutExceptionHandling();
         $this->expectException(\Exception::class);
-        $this->expectExceptionMessage('No Model found');
+        $this->expectExceptionMessage("Attempt to assign property 'published' of non-object");
         $response   = $this->getJsonRequest()->get('/unknown/publish/' . $this->category->id);
         $response->assertStatus(Response::HTTP_INTERNAL_SERVER_ERROR);
     }
