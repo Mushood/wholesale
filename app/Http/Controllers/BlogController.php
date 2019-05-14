@@ -12,15 +12,6 @@ class BlogController extends BaseController
 {
     use Publishable;
 
-    public function __construct()
-    {
-        $this->setClassModel();
-        $this->setClassResource();
-        $this->setViewFolder();
-        $this->setVariableNameSingular();
-        $this->setVariableNamePlural();
-    }
-
     public function setClassModel()
     {
         $this->className = Blog::class;
