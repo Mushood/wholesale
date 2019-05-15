@@ -37,4 +37,12 @@ class Shop extends Model implements HasMedia
     protected $casts = [
         'published'  =>  'boolean',
     ];
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function products()
+    {
+        return $this->hasMany('App\Models\Product');
+    }
 }

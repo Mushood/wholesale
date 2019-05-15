@@ -36,4 +36,8 @@ Route::get('category/publish/{category}', 'CategoryController@publish')->name('c
 Route::get('category/unpublish/{category}', 'CategoryController@unpublish')->name('category.unpublish');
 Route::resource('category', 'CategoryController');
 
+Route::get('product/publish/{product}', 'ProductController@publish')->name('product.publish');
+Route::get('product/unpublish/{product}', 'ProductController@unpublish')->name('product.unpublish');
+Route::resource('product', 'ProductController');
+
 Route::resource('temporaryUpload', 'TemporaryUploadController');

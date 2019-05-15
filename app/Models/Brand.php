@@ -42,4 +42,12 @@ class Brand extends Model implements HasMedia
     {
         return $this->hasMany('App\Models\User');
     }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function products()
+    {
+        return $this->hasMany('App\Models\Product');
+    }
 }

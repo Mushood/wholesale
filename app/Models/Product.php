@@ -3,17 +3,18 @@
 namespace App\Models;
 
 use App\Scopes\PublishedScope;
+use Illuminate\Support\Facades\Auth;
 use Dimsav\Translatable\Translatable;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Facades\Auth;
 use Spatie\MediaLibrary\HasMedia\HasMedia;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Spatie\MediaLibrary\HasMedia\HasMediaTrait;
 
-class Category extends Model implements HasMedia
+class Product extends Model implements HasMedia
 {
-    use Translatable, HasMediaTrait;
+    use Translatable, HasMediaTrait, SoftDeletes;
 
-    protected $fillable = [ 'type', 'image'];
+    protected $fillable =['image', 'category_id', 'brand_id', 'shop_id', 'min_quantity', 'measure'];
 
     /**
      * The "booting" method of the model.
@@ -35,13 +36,13 @@ class Category extends Model implements HasMedia
      * @var array
      */
     public $translatedAttributes = [
-        'title', 'description',
+        'title', 'subtitle', 'introduction', 'body'
     ];
 
     /**
      * @var array
      */
-    protected $with = ['translations'];
+    protected $with = ['translations', 'prices', 'category', 'category.translations', 'brand', 'shop'];
 
     /**
      * @var array
@@ -49,6 +50,22 @@ class Category extends Model implements HasMedia
     protected $casts = [
         'published'  =>  'boolean',
     ];
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function shop()
+    {
+        return $this->belongsTo('App\Models\Shop');
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function brand()
+    {
+        return $this->belongsTo('App\Models\Brand');
+    }
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasOne
@@ -59,10 +76,18 @@ class Category extends Model implements HasMedia
     }
 
     /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function category()
+    {
+        return $this->belongsTo('App\Models\Category');
+    }
+
+    /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function products()
+    public function prices()
     {
-        return $this->hasMany('App\Models\Product');
+        return $this->hasMany('App\Models\ProductPrice');
     }
 }
