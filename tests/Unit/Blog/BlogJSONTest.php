@@ -122,16 +122,27 @@ class BlogJSONTest extends BlogTestCase
     public function testUserCanDeleteABlogJSON()
     {
         $this->assertDatabaseHas('blog_translations', [
+            'blog_id' => $this->blog->id,
             'title' => $this->blog->title,
             'body'  => $this->blog->body
+        ]);
+
+        $this->assertDatabaseHas('blogs', [
+            'id' => $this->blog->id,
+            'deleted_at' => null,
         ]);
 
         $response   = $this->getJsonRequest()->delete('/blog/' . $this->blog->id, ['_token' => csrf_token()]);
         $response->assertStatus(Response::HTTP_OK);
 
-        $this->assertDatabaseMissing('blog_translations', [
+        $this->assertDatabaseHas('blog_translations', [
             'title' => $this->blog->title,
             'body'  => $this->blog->body
+        ]);
+
+        $this->assertDatabaseMissing('blogs', [
+            'id' => $this->blog->id,
+            'deleted_at' => null,
         ]);
     }
 }

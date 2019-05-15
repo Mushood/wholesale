@@ -19,6 +19,9 @@ class CreateCategoriesTable extends Migration
             $table->integer('level')->default(0);
             $table->enum('type', ['tag', 'category']);
             $table->boolean('published')->default(false);
+
+            $table->softDeletes();
+
             $table->timestamps();
         });
 

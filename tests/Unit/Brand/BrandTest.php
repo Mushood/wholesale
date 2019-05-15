@@ -134,14 +134,19 @@ class BrandTest extends BrandTestCase
         $this->brand->save();
 
         $this->assertDatabaseHas('brands', [
-            'title' => $this->brand->title,
+            'id'    => $this->brand->id,
+            'title' => $title,
+            'deleted_at' => null
         ]);
 
         $response   = $this->delete('/brand/' . $this->brand->id, ['_token' => csrf_token()]);
 
         $response->assertStatus(Response::HTTP_FOUND);
+
         $this->assertDatabaseMissing('brands', [
+            'id'    => $this->brand->id,
             'title' => $title,
+            'deleted_at' => null
         ]);
     }
 }

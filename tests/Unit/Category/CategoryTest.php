@@ -133,16 +133,29 @@ class CategoryTest extends CategoryTestCase
     public function testUserCanDeleteACategory()
     {
         $this->assertDatabaseHas('category_translations', [
+            'category_id' => $this->category->id,
             'title' => $this->category->title,
             'description'  => $this->category->description
+        ]);
+
+        $this->assertDatabaseHas('categories', [
+            'id' => $this->category->id,
+            'deleted_at' => null,
         ]);
 
         $response   = $this->delete('/category/' . $this->category->id, ['_token' => csrf_token()]);
 
         $response->assertStatus(Response::HTTP_FOUND);
-        $this->assertDatabaseMissing('category_translations', [
+
+        $this->assertDatabaseHas('category_translations', [
+            'category_id' => $this->category->id,
             'title' => $this->category->title,
             'description'  => $this->category->description
+        ]);
+
+        $this->assertDatabaseMissing('categories', [
+            'id' => $this->category->id,
+            'deleted_at' => null,
         ]);
     }
 }

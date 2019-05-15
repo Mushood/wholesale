@@ -20,6 +20,9 @@ class CreateShopsTable extends Migration
             $table->integer('rating')->nullable();
             $table->integer('views')->default(0);
             $table->boolean('published')->default(false);
+
+            $table->softDeletes();
+            
             $table->timestamps();
         });
 

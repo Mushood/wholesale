@@ -134,14 +134,19 @@ class ShopTest extends ShopTestCase
         $this->shop->save();
 
         $this->assertDatabaseHas('shops', [
-            'title' => $this->shop->title,
+            'id'            => $this->shop->id,
+            'title'         => $title,
+            'deleted_at'    => null,
         ]);
 
         $response   = $this->delete('/shop/' . $this->shop->id, ['_token' => csrf_token()]);
 
         $response->assertStatus(Response::HTTP_FOUND);
+
         $this->assertDatabaseMissing('shops', [
-            'title' => $title,
+            'id'            => $this->shop->id,
+            'title'         => $title,
+            'deleted_at'    => null,
         ]);
     }
 }

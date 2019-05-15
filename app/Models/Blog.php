@@ -3,15 +3,16 @@
 namespace App\Models;
 
 use App\Scopes\PublishedScope;
+use Illuminate\Support\Facades\Auth;
 use Dimsav\Translatable\Translatable;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Facades\Auth;
 use Spatie\MediaLibrary\HasMedia\HasMedia;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Spatie\MediaLibrary\HasMedia\HasMediaTrait;
 
 class Blog extends Model implements HasMedia
 {
-    use Translatable, HasMediaTrait;
+    use Translatable, HasMediaTrait, SoftDeletes;
 
     protected $fillable =['image', 'category_id'];
 

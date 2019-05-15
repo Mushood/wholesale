@@ -18,6 +18,9 @@ class CreateBrandsTable extends Migration
             $table->string('title');
             $table->integer('views')->default(0);
             $table->boolean('published')->default(false);
+
+            $table->softDeletes();
+
             $table->timestamps();
         });
     }

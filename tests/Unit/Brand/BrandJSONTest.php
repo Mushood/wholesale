@@ -118,14 +118,18 @@ class BrandJSONTest extends BrandTestCase
         $this->brand->save();
 
         $this->assertDatabaseHas('brands', [
-            'title' => $this->brand->fresh()->title,
+            'id'    => $this->brand->id,
+            'title' => $title,
+            'deleted_at' => null
         ]);
 
         $response   = $this->getJsonRequest()->delete('/brand/' . $this->brand->id, ['_token' => csrf_token()]);
         $response->assertStatus(Response::HTTP_OK);
 
         $this->assertDatabaseMissing('brands', [
+            'id'    => $this->brand->id,
             'title' => $title,
+            'deleted_at' => null
         ]);
     }
 }

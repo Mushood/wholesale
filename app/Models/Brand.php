@@ -3,14 +3,15 @@
 namespace App\Models;
 
 use App\Scopes\PublishedScope;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Database\Eloquent\Model;
 use Spatie\MediaLibrary\HasMedia\HasMedia;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Spatie\MediaLibrary\HasMedia\HasMediaTrait;
 
 class Brand extends Model implements HasMedia
 {
-    use HasMediaTrait;
+    use HasMediaTrait, SoftDeletes;
 
     protected $fillable =['image', 'title'];
 
@@ -26,6 +27,10 @@ class Brand extends Model implements HasMedia
         if (!Auth::user() || !Auth::user()->hasRole('admin')) {
             static::addGlobalScope(new PublishedScope());
         }
+
+        static::deleting(function($brand) {
+            $brand->products()->delete();
+        });
     }
 
     /**

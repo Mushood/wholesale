@@ -3,15 +3,16 @@
 namespace App\Models;
 
 use App\Scopes\PublishedScope;
+use Illuminate\Support\Facades\Auth;
 use Dimsav\Translatable\Translatable;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Facades\Auth;
 use Spatie\MediaLibrary\HasMedia\HasMedia;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Spatie\MediaLibrary\HasMedia\HasMediaTrait;
 
 class Category extends Model implements HasMedia
 {
-    use Translatable, HasMediaTrait;
+    use Translatable, HasMediaTrait, SoftDeletes;
 
     protected $fillable = [ 'type', 'image'];
 
@@ -27,6 +28,11 @@ class Category extends Model implements HasMedia
         if (!Auth::user() || !Auth::user()->hasRole('admin')) {
             static::addGlobalScope(new PublishedScope());
         }
+
+        static::deleting(function($category) {
+            $category->products()->delete();
+            $category->blogs()->delete();
+        });
     }
 
     /**
@@ -56,6 +62,14 @@ class Category extends Model implements HasMedia
     public function translation()
     {
         return $this->hasOne('App\Models\BlogTranslation');
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function blogs()
+    {
+        return $this->hasMany('App\Models\Blog');
     }
 
     /**

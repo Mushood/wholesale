@@ -118,14 +118,18 @@ class ShopJSONTest extends ShopTestCase
         $this->shop->save();
 
         $this->assertDatabaseHas('shops', [
-            'title' => $this->shop->fresh()->title,
+            'id'            => $this->shop->id,
+            'title'         => $title,
+            'deleted_at'    => null,
         ]);
 
         $response   = $this->getJsonRequest()->delete('/shop/' . $this->shop->id, ['_token' => csrf_token()]);
         $response->assertStatus(Response::HTTP_OK);
 
         $this->assertDatabaseMissing('shops', [
-            'title' => $title,
+            'id'            => $this->shop->id,
+            'title'         => $title,
+            'deleted_at'    => null,
         ]);
     }
 }

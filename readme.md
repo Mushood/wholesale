@@ -12,6 +12,10 @@ This project provides an interface to manage selling products in wholesale while
 - Products Management
 - Cart System
 - Paypal Payment System
+- Product promo
+- Add country_id to users
+- Add language_id to 
+- Price usd converter
 ______________________________
 - Newsletter Management
 - Wishlist 

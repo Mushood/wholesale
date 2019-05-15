@@ -3,14 +3,15 @@
 namespace App\Models;
 
 use App\Scopes\PublishedScope;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Database\Eloquent\Model;
 use Spatie\MediaLibrary\HasMedia\HasMedia;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Spatie\MediaLibrary\HasMedia\HasMediaTrait;
 
 class Shop extends Model implements HasMedia
 {
-    use HasMediaTrait;
+    use HasMediaTrait, SoftDeletes;
 
     protected $fillable =['image', 'title', 'ref'];
 
@@ -29,6 +30,10 @@ class Shop extends Model implements HasMedia
         ) {
             static::addGlobalScope(new PublishedScope());
         }
+
+        static::deleting(function($shop) {
+            $shop->products()->delete();
+        });
     }
 
     /**

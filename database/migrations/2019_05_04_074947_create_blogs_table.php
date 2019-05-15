@@ -21,6 +21,9 @@ class CreateBlogsTable extends Migration
             $table->foreign('category_id')->references('id')->on('categories');
             $table->integer('user_id')->unsigned()->nullable();
             $table->foreign('user_id')->references('id')->on('users');
+
+            $table->softDeletes();
+
             $table->timestamps();
         });
 
