@@ -36,6 +36,7 @@ class CreateProductsTable extends Migration
             $table->integer('product_id')->unsigned()->nullable();
             $table->foreign('product_id')->references('id')->on('currencies');
             $table->integer('price')->unsigned();
+            $table->integer('tax')->default(10);
             $table->integer('quantity')->unsigned();
             $table->integer('currency_id')->unsigned()->nullable();
             $table->foreign('currency_id')->references('id')->on('currencies');

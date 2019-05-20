@@ -6,6 +6,7 @@ use App\Models\Blog;
 use App\Models\Shop;
 use App\Models\User;
 use App\Models\Brand;
+use App\Models\Product;
 use App\Models\Category;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
@@ -33,6 +34,7 @@ class RouteServiceProvider extends ServiceProvider
         Route::model('user', User::class);
         Route::model('brand', Brand::class);
         Route::model('category', Category::class);
+        Route::model('product', Product::class);
 
         parent::boot();
     }

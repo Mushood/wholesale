@@ -21,6 +21,7 @@ class ProductResource extends JsonResource
                 'quantity'  => $price->quantity,
                 'currency'  => $price->currency->name,
                 'price_usd' => $price->price,
+                'tax'       => $price->tax
             ]);
         }
 

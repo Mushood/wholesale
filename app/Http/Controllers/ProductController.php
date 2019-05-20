@@ -76,6 +76,8 @@ class ProductController extends BaseController
         $product->update($validated);
         $product->addMedia($image)->toMediaCollection();
 
+        $product = $product->fresh();
+
         if ($request->wantsJson()) {
 
             return new ProductResource($product);

@@ -30,6 +30,14 @@
             </select>
         </div>
         <div class="form-group">
+            <label for="brand">Brand</label>
+            <select class="form-control" id="brand" name="brand">
+                @foreach($brands as $key => $brand)
+                    <option value="{{ $brand->id }}">{{ $brand->title }}</option>
+                @endforeach
+            </select>
+        </div>
+        <div class="form-group">
             <label for="image">File</label>
             <input type="file" class="form-control" id="image" name="image" placeholder="image">
         </div>

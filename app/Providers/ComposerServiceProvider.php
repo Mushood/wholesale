@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Models\Brand;
 use App\Models\Category;
 use Illuminate\Support\ServiceProvider;
 
@@ -27,6 +28,13 @@ class ComposerServiceProvider extends ServiceProvider
         view()->composer('blog.create', function ($view) {
             $view->with([
                 'categories' => Category::where('type', 'category')->get()
+            ]);
+        });
+
+        view()->composer('product.create', function ($view) {
+            $view->with([
+                'categories' => Category::where('type', 'category')->get(),
+                'brands'     => Brand::all()
             ]);
         });
     }
