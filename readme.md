@@ -16,6 +16,7 @@ This project provides an interface to manage selling products in wholesale while
 - Add country_id to users
 - Add language_id to 
 - Price usd converter
+- Set job to clean deleted models
 ______________________________
 - Newsletter Management
 - Wishlist 
@@ -34,12 +35,13 @@ The application is developed in a TDD way to ensure that our code is reliable
 - Categorisation / Tagging of products
 - Brands Management(50%)
 - Shop Management(50%)
+- Products Management(50%)
 
 ## Interesting Features
 - Base Controller
 
 ## Features in progress
-- Products Management
+- Cart System
 
 ## Improvements
 - Abstract Internationalization into a package
