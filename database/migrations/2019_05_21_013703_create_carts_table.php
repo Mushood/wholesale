@@ -16,11 +16,11 @@ class CreateCartsTable extends Migration
     {
         Schema::create('carts', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('unauth_identifier')->nullable();
+            $table->string('unauth_identifier')->unique()->nullable();
             $table->integer('user_id')->unsigned()->nullable();
             $table->foreign('user_id')->references('id')->on('users');
-            $table->decimal('amount', 8, 2)->comment('amount at checkout/paid');
-            $table->boolean('active')->comment('denotes if cart is currently in use');
+            $table->decimal('amount', 8, 2)->nullable()->comment('amount at checkout/paid');
+            $table->boolean('active')->default(true)->comment('denotes if cart is currently in use');
             $table->enum('status', array_values(Cart::CART_STATUS))->default(Cart::CART_STATUS['new']);
             $table->timestamps();
         });
