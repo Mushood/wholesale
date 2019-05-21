@@ -3,7 +3,6 @@
 namespace Tests\Unit;
 
 use App\Models\Blog;
-use App\Models\BlogTranslation;
 use App\Models\User;
 use Tests\BlogTestCase;
 use Illuminate\Http\Response;

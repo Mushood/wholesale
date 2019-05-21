@@ -3,11 +3,9 @@
 namespace Tests;
 
 use App\Models\Shop;
-use App\Models\Category;
 use Illuminate\Support\Facades\Session;
-use Tests\TestCase as BaseTestCase;
 
-abstract class ShopTestCase extends BaseTestCase
+abstract class ShopTestCase extends CrudTestCase
 {
     use CreatesApplication;
 

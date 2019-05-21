@@ -2,9 +2,8 @@
 
 namespace Tests\Unit;
 
-use App\Models\Product;
-use App\Models\ProductTranslation;
 use App\Models\User;
+use App\Models\Product;
 use Tests\ProductTestCase;
 use Illuminate\Http\Response;
 use Illuminate\Http\UploadedFile;

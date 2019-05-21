@@ -4,9 +4,8 @@ namespace Tests;
 
 use App\Models\Category;
 use Illuminate\Support\Facades\Session;
-use Tests\TestCase as BaseTestCase;
 
-abstract class CategoryTestCase extends BaseTestCase
+abstract class CategoryTestCase extends CrudTestCase
 {
     use CreatesApplication;
 

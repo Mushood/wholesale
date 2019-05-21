@@ -5,9 +5,8 @@ namespace Tests;
 use App\Models\Blog;
 use App\Models\Category;
 use Illuminate\Support\Facades\Session;
-use Tests\TestCase as BaseTestCase;
 
-abstract class BlogTestCase extends BaseTestCase
+abstract class BlogTestCase extends CrudTestCase
 {
     use CreatesApplication;
 

@@ -3,8 +3,6 @@
 namespace Tests\Unit;
 
 use App\Models\Category;
-use App\Models\CategoryTranslation;
-use App\Models\User;
 use Tests\CategoryTestCase;
 use Illuminate\Http\Response;
 use Illuminate\Http\UploadedFile;

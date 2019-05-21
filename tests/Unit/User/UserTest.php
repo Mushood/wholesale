@@ -4,17 +4,14 @@ namespace Tests\Unit;
 
 use App\Models\Shop;
 use App\Models\User;
-use Illuminate\Auth\Notifications\VerifyEmail;
+use Tests\CrudTestCase;
 use Illuminate\Http\Response;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Notification;
-use Illuminate\Support\Str;
-use Tests\TestCase as BaseTestCase;
-use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Notification;
+use Illuminate\Auth\Notifications\VerifyEmail;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 
-class UserTest extends BaseTestCase
+class UserTest extends CrudTestCase
 {
     use DatabaseTransactions;
 

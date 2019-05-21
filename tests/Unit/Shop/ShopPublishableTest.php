@@ -3,10 +3,10 @@
 namespace Tests\Unit;
 
 use App\Models\Shop;
-use App\Models\ShopTranslation;
 use App\Models\User;
 use Tests\ShopTestCase;
 use Illuminate\Http\Response;
+use App\Models\ShopTranslation;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 

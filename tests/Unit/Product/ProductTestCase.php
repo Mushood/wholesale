@@ -7,9 +7,8 @@ use App\Models\Brand;
 use App\Models\Category;
 use App\Models\Product;
 use Illuminate\Support\Facades\Session;
-use Tests\TestCase as BaseTestCase;
 
-abstract class ProductTestCase extends BaseTestCase
+abstract class ProductTestCase extends CrudTestCase
 {
     use CreatesApplication;
 

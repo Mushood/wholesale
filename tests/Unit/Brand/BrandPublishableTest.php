@@ -3,10 +3,10 @@
 namespace Tests\Unit;
 
 use App\Models\Brand;
-use App\Models\BrandTranslation;
 use App\Models\User;
 use Tests\BrandTestCase;
 use Illuminate\Http\Response;
+use App\Models\BrandTranslation;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 

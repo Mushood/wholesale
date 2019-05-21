@@ -3,11 +3,9 @@
 namespace Tests;
 
 use App\Models\Brand;
-use App\Models\Category;
 use Illuminate\Support\Facades\Session;
-use Tests\TestCase as BaseTestCase;
 
-abstract class BrandTestCase extends BaseTestCase
+abstract class BrandTestCase extends CrudTestCase
 {
     use CreatesApplication;
 
