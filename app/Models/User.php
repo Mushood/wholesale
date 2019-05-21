@@ -54,4 +54,12 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         return $this->belongsTo('App\Models\Shop');
     }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\hasMany
+     */
+    public function carts()
+    {
+        return $this->hasMany('App\Models\Shop');
+    }
 }
