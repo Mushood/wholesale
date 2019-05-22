@@ -15,34 +15,23 @@ class ShoppingController extends Controller
      */
     public function index(Request $request)
     {
-        $user = Auth::user();
-        $cart = null;
-
-        if ($request->session()->has(Cart::CART_IDENTIFIER_KEY)) {
-            $cart = Cart::where('identifier', $request->session()->get(Cart::CART_IDENTIFIER_KEY))->first();
-
-            if ($user !== null) {
-                $cart->user()->associate($user);
-                $cart->save();
-            }
-        }
-
-        if ($user !== null && $cart === null) {
-            $cart = Cart::where('user_id', $user->id)->where('active', true)->first();
-        }
-
-        if ($cart === null) {
-            $cart = Cart::create([]);
-        }
-
-        if ($user === null) {
-            $request->session()->put(Cart::CART_IDENTIFIER_KEY, $cart->identifier);
-        }
+        $cart = Cart::get($request);
 
         if ($request->wantsJson()) {
             return new CartResource($cart);
         }
 
         return view('cart.index', compact('cart'));
+    }
+
+    public function add(Request $request, $product)
+    {
+        $cart = Cart::get($request);
+        $cart->items()->create([
+            'product_id' => $product->id,
+        ]);
+        $cart->save();
+
+        return new CartResource($cart);
     }
 }

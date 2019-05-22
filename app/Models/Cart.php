@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class Cart extends Model
@@ -59,6 +60,11 @@ class Cart extends Model
         return $this->belongsTo('App\Models\User');
     }
 
+    /**
+     * Get total of cart
+     *
+     * @return float|int
+     */
     public function getTotal()
     {
         $total = 0;
@@ -70,7 +76,12 @@ class Cart extends Model
         return $total;
     }
 
-    public static function generateIdentifier($length)
+    /**
+     * Generate a random string on length specified
+     * @param int $length
+     * @return string
+     */
+    public static function generateIdentifier(int $length)
     {
         do {
             $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
@@ -82,5 +93,40 @@ class Cart extends Model
         } while(self::where('identifier', $randomString)->exists());
 
         return $randomString;
+    }
+
+    /**
+     * Retrieve cart instance
+     *
+     * @param Request $request
+     * @return Cart
+     */
+    public static function get(Request $request) : self
+    {
+        $user = Auth::user();
+        $cart = null;
+
+        if ($request->session()->has(self::CART_IDENTIFIER_KEY)) {
+            $cart = Cart::where('identifier', $request->session()->get(self::CART_IDENTIFIER_KEY))->first();
+
+            if ($user !== null) {
+                $cart->user()->associate($user);
+                $cart->save();
+            }
+        }
+
+        if ($user !== null && $cart === null) {
+            $cart = self::where('user_id', $user->id)->where('active', true)->first();
+        }
+
+        if ($cart === null) {
+            $cart = self::create([]);
+        }
+
+        if ($user === null) {
+            $request->session()->put(self::CART_IDENTIFIER_KEY, $cart->identifier);
+        }
+
+        return $cart;
     }
 }

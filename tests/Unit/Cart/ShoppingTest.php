@@ -3,6 +3,7 @@
 namespace Tests\Unit;
 
 use App\Models\Cart;
+use App\Models\Product;
 use App\Models\User;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Session;
@@ -91,5 +92,51 @@ class ShoppingTest extends TestCase
         $this->assertNotEquals(
             $responseFirst->original->getData()['cart']->user_id, $responseSecond->original->getData()['cart']->user_id
         );
+    }
+
+    public function testItemCanBeAddedToCart()
+    {
+        $product = Product::where('published', true)->first();
+        $response = $this->withHeaders(['Accept' => 'Application/json'])->get('/cart/add/' . $product->id);
+        $response->assertJsonStructure(['data' => [ 'total', 'items' ]]);
+
+        $latestCart = Cart::latest()->first();
+        $this->assertEquals($latestCart->items[0]->product_id, $product->id);
+
+        $productSecond = Product::where('published', true)->skip(1)->first();
+        $response = $this->withHeaders(['Accept' => 'Application/json'])->get('/cart/add/' . $productSecond->id);
+        $response->assertJsonStructure(['data' => [ 'total', 'items' ]]);
+
+        $latestCart = Cart::latest()->first();
+        $this->assertEquals($latestCart->items[1]->product_id, $productSecond->id);
+    }
+
+    public function testTwoItemCannotBeAddedToCart()
+    {
+        $product = Product::where('published', true)->first();
+        $response = $this->withHeaders(['Accept' => 'Application/json'])->get('/cart/add/' . $product->id);
+        $response->assertJsonStructure(['data' => [ 'total', 'items' ]]);
+
+        $latestCart = Cart::latest()->first();
+        $this->assertEquals($latestCart->items[0]->product_id, $product->id);
+
+        $this->expectException(\Exception::class);
+        $response = $this->withHeaders(['Accept' => 'Application/json'])->get('/cart/add/' . $product->id);
+
+    }
+
+    public function testCartTotal()
+    {
+        $response = $this->get('/cart');
+        $latestCart = Cart::latest()->first();
+        $this->assertEquals(0, $latestCart->getTotal());
+
+        $product1 = Product::where('published', true)->first();
+        $this->withHeaders(['Accept' => 'Application/json'])->get('/cart/add/' . $product1->id);
+        $this->assertEquals($product1->price, $latestCart->getTotal());
+
+        $product2 = Product::where('published', true)->skip(1)->first();
+        $this->withHeaders(['Accept' => 'Application/json'])->get('/cart/add/' . $product2->id);
+        $this->assertEquals($product1->price + $product2->price, $latestCart->getTotal());
     }
 }

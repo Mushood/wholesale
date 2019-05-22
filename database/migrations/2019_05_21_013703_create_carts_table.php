@@ -34,6 +34,8 @@ class CreateCartsTable extends Migration
             $table->integer('quantity')->unsigned()->default(1);
             $table->decimal('amount', 8, 2)->nullable()->comment('amount at checkout/paid');
 
+            $table->unique(['cart_id', 'product_id']);
+
             $table->timestamps();
         });
     }
