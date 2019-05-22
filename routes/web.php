@@ -41,3 +41,5 @@ Route::get('product/unpublish/{product}', 'ProductController@unpublish')->name('
 Route::resource('product', 'ProductController');
 
 Route::resource('temporaryUpload', 'TemporaryUploadController');
+
+Route::get('cart', 'ShoppingController@index')->name('cart.index');

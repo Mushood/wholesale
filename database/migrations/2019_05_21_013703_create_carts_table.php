@@ -16,7 +16,7 @@ class CreateCartsTable extends Migration
     {
         Schema::create('carts', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('unauth_identifier')->unique()->nullable();
+            $table->string('identifier')->unique()->nullable();
             $table->integer('user_id')->unsigned()->nullable();
             $table->foreign('user_id')->references('id')->on('users');
             $table->decimal('amount', 8, 2)->nullable()->comment('amount at checkout/paid');

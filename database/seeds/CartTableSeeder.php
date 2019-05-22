@@ -36,7 +36,7 @@ class CartTableSeeder extends Seeder
 
         //Unauth User
         $cart = new Cart();
-        $cart->unauth_identifier = rand(1000000, 10000000);
+        $cart->identifier = Cart::generateIdentifier(15);
         $cart->save();
 
         for ($i = 0; $i < 3; $i++) {
