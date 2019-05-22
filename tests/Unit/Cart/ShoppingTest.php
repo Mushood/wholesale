@@ -67,4 +67,29 @@ class ShoppingTest extends TestCase
         $response->assertStatus(Response::HTTP_OK);
         $response->assertJsonStructure(['data' => [ 'total', 'items' ]]);
     }
+
+    public function testUnauthenticatedUserCanCreateAndRetrieveItWhenLoggingIn()
+    {
+        $responseFirst = $this->get('/cart');
+        $latestCart = Cart::latest()->first();
+        $responseFirst->assertSessionHas(Cart::CART_IDENTIFIER_KEY, $latestCart->identifier);
+
+        //get user with no cart
+        $userIds = Cart::where('user_id', '!=', null)->pluck('user_id');
+        $user = User::whereNotIn('id', $userIds)->first();
+
+        $responseSecond = $this->withSession([Cart::CART_IDENTIFIER_KEY => $latestCart->identifier])
+            ->actingAs($user)
+            ->get('/cart');
+
+        $this->assertEquals($responseSecond->original->getData()['cart']->id, $latestCart->id);
+        $this->assertEquals($responseSecond->original->getData()['cart']->user_id, $latestCart->fresh()->user_id);
+        $this->assertEquals($responseSecond->original->getData()['cart']->user_id, $user->id);
+        $this->assertEquals(
+            $responseFirst->original->getData()['cart']->id, $responseSecond->original->getData()['cart']->id
+        );
+        $this->assertNotEquals(
+            $responseFirst->original->getData()['cart']->user_id, $responseSecond->original->getData()['cart']->user_id
+        );
+    }
 }

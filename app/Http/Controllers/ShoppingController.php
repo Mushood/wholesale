@@ -18,7 +18,16 @@ class ShoppingController extends Controller
         $user = Auth::user();
         $cart = null;
 
-        if ($user !== null) {
+        if ($request->session()->has(Cart::CART_IDENTIFIER_KEY)) {
+            $cart = Cart::where('identifier', $request->session()->get(Cart::CART_IDENTIFIER_KEY))->first();
+
+            if ($user !== null) {
+                $cart->user()->associate($user);
+                $cart->save();
+            }
+        }
+
+        if ($user !== null && $cart === null) {
             $cart = Cart::where('user_id', $user->id)->where('active', true)->first();
         }
 
