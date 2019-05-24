@@ -44,3 +44,5 @@ Route::resource('temporaryUpload', 'TemporaryUploadController');
 
 Route::get('cart', 'ShoppingController@index')->name('cart.index');
 Route::get('cart/add/{product}', 'ShoppingController@add')->name('cart.add');
+Route::get('cart/set/{product}/{quantity}', 'ShoppingController@set')->name('cart.set');
+Route::get('cart/update/{product}/{quantity}', 'ShoppingController@update')->name('cart.update');

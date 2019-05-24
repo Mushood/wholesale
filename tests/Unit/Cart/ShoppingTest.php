@@ -139,4 +139,71 @@ class ShoppingTest extends TestCase
         $this->withHeaders(['Accept' => 'Application/json'])->get('/cart/add/' . $product2->id);
         $this->assertEquals($product1->price + $product2->price, $latestCart->getTotal());
     }
+
+    public function testItemQuantityCanBeSet()
+    {
+        $response = $this->get('/cart');
+        $latestCart = Cart::latest()->first();
+        $this->assertEquals(0, count($latestCart->items));
+
+        $product1 = Product::where('published', true)->first();
+        $this->withHeaders(['Accept' => 'Application/json'])->get('/cart/set/' . $product1->id .'/2');
+        $this->assertEquals(1, count($latestCart->fresh()->items));
+        $this->assertEquals(2, $latestCart->fresh()->items[0]->quantity);
+
+        $product2 = Product::where('published', true)->skip(1)->first();
+        $this->withHeaders(['Accept' => 'Application/json'])->get('/cart/set/' . $product2->id .'/3');
+        $this->assertEquals(2, count($latestCart->fresh()->items));
+        $this->assertEquals(2, $latestCart->fresh()->items[0]->quantity);
+        $this->assertEquals(3, $latestCart->fresh()->items[1]->quantity);
+
+        $product1 = Product::where('published', true)->first();
+        $this->withHeaders(['Accept' => 'Application/json'])->get('/cart/set/' . $product1->id .'/5');
+        $this->assertEquals(2, count($latestCart->fresh()->items));
+        $this->assertEquals(5, $latestCart->fresh()->items[0]->quantity);
+    }
+
+    public function testItemQuantityCanBeSetOnlyPositive()
+    {
+        $response = $this->get('/cart');
+        $latestCart = Cart::latest()->first();
+        $this->assertEquals(0, count($latestCart->items));
+
+        $this->expectException(\Exception::class);
+        $product1 = Product::where('published', true)->first();
+        $this->withHeaders(['Accept' => 'Application/json'])->get('/cart/set/' . $product1->id .'/-1');
+    }
+
+    public function testItemQuantityCanBeUpdated()
+    {
+        $response = $this->get('/cart');
+        $latestCart = Cart::latest()->first();
+        $this->assertEquals(0, count($latestCart->items));
+
+        $product1 = Product::where('published', true)->first();
+        $this->withHeaders(['Accept' => 'Application/json'])->get('/cart/update/' . $product1->id .'/2');
+        $this->assertEquals(1, count($latestCart->fresh()->items));
+        $this->assertEquals(2, $latestCart->fresh()->items[0]->quantity);
+
+        $this->withHeaders(['Accept' => 'Application/json'])->get('/cart/update/' . $product1->id .'/2');
+        $this->assertEquals(1, count($latestCart->fresh()->items));
+        $this->assertEquals(4, $latestCart->fresh()->items[0]->quantity);
+
+        $product2 = Product::where('published', true)->skip(1)->first();
+        $this->withHeaders(['Accept' => 'Application/json'])->get('/cart/update/' . $product2->id .'/3');
+        $this->assertEquals(2, count($latestCart->fresh()->items));
+        $this->assertEquals(4, $latestCart->fresh()->items[0]->quantity);
+        $this->assertEquals(3, $latestCart->fresh()->items[1]->quantity);
+
+        $this->withHeaders(['Accept' => 'Application/json'])->get('/cart/update/' . $product1->id .'/-1');
+        $this->assertEquals(2, count($latestCart->fresh()->items));
+        $this->assertEquals(3, $latestCart->fresh()->items[0]->quantity);
+
+        $this->withHeaders(['Accept' => 'Application/json'])->get('/cart/update/' . $product2->id .'/-2');
+        $this->assertEquals(2, count($latestCart->fresh()->items));
+        $this->assertEquals(1, $latestCart->fresh()->items[1]->quantity);
+
+        $this->withHeaders(['Accept' => 'Application/json'])->get('/cart/update/' . $product2->id .'/-1');
+        $this->assertEquals(1, count($latestCart->fresh()->items));
+    }
 }

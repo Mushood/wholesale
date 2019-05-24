@@ -129,4 +129,21 @@ class Cart extends Model
 
         return $cart;
     }
+
+    /**
+     * Check if product exists in cart
+     *
+     * @param $product
+     * @return bool|int|string
+     */
+    public function checkIfExists($product)
+    {
+        foreach ($this->items as $key => $item) {
+            if ($item->product_id === $product->id) {
+                return $key;
+            }
+        }
+
+        return false;
+    }
 }

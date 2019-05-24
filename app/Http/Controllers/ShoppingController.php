@@ -34,4 +34,57 @@ class ShoppingController extends Controller
 
         return new CartResource($cart);
     }
+
+    public function set(Request $request, $product, $quantity)
+    {
+        if ($quantity < 1) {
+            throw (new \Exception('quantity cannot be negative'));
+        }
+
+        $cart = Cart::get($request);
+        $key = $cart->checkIfExists($product);
+
+        if ($key === false) {
+            $cart->items()->create([
+                'product_id' => $product->id,
+                'quantity'   => $quantity
+            ]);
+        }
+
+        if (is_numeric($key)) {
+            $cart->items[$key]->update([
+                'quantity'   => $quantity
+            ]);
+        }
+
+        return new CartResource($cart);
+    }
+
+    public function update(Request $request, $product, $quantity)
+    {
+        $cart = Cart::get($request);
+
+        $key = $cart->checkIfExists($product);
+
+        if ($key === false) {
+            $cart->items()->create([
+                'product_id' => $product->id,
+                'quantity'   => $quantity
+            ]);
+        }
+
+        if (is_numeric($key)) {
+            $quantity += $cart->items[$key]->quantity;
+
+            if ($quantity < 1) {
+                $cart->items[$key]->delete();
+            } else {
+                $cart->items[$key]->update([
+                    'quantity'   => $quantity
+                ]);
+            }
+        }
+
+        return new CartResource($cart);
+    }
 }
