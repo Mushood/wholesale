@@ -206,4 +206,33 @@ class ShoppingTest extends TestCase
         $this->withHeaders(['Accept' => 'Application/json'])->get('/cart/update/' . $product2->id .'/-1');
         $this->assertEquals(1, count($latestCart->fresh()->items));
     }
+
+    public function testUserCanSaveCartAndCreateAnotherCart()
+    {
+        $response = $this->actingAs($this->user)->get('/cart');
+
+        $response->assertStatus(Response::HTTP_OK);
+
+        $product1 = Product::where('published', true)->first();
+        $this->actingAs($this->user)->withHeaders(['Accept' => 'Application/json'])->get('/cart/set/' . $product1->id .'/2');
+
+        $this->assertDatabaseHas('carts', [
+            'user_id' => $this->user->id,
+            'active' => true
+        ]);
+
+        $response = $this->actingAs($this->user)->get('/cart/save');
+
+        $this->assertDatabaseMissing('carts', [
+            'user_id' => $this->user->id,
+            'active' => true
+        ]);
+
+        $response = $this->actingAs($this->user)->get('/cart');
+
+        $this->assertDatabaseHas('carts', [
+            'user_id' => $this->user->id,
+            'active' => true
+        ]);
+    }
 }

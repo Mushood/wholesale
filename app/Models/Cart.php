@@ -14,7 +14,8 @@ class Cart extends Model
         'processed' => 3,
         'delivered' => 4,
         'cancelled' => 5,
-        'refund'    => 6
+        'refund'    => 6,
+        'saved'     => 7
     ];
 
     const CART_IDENTIFIER_KEY = "cart_identifier";

@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Cart;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\Response;
 use App\Http\Resources\CartResource;
 
 class ShoppingController extends Controller
@@ -86,5 +86,15 @@ class ShoppingController extends Controller
         }
 
         return new CartResource($cart);
+    }
+
+    public function save(Request $request)
+    {
+        $cart = Cart::get($request);
+        $cart->status = Cart::CART_STATUS['saved'];
+        $cart->active = false;
+        $cart->save();
+
+        return response()->json([] , Response::HTTP_OK);
     }
 }
