@@ -14,7 +14,7 @@ This project provides an interface to manage selling products in wholesale while
 - Paypal Payment System
 - Product promo
 - Add country_id to users
-- Add language_id to 
+- Add language_id to users
 - Price usd converter
 - Set job to clean deleted models
 ______________________________
@@ -36,12 +36,13 @@ The application is developed in a TDD way to ensure that our code is reliable
 - Brands Management(50%)
 - Shop Management(50%)
 - Products Management(50%)
+- Cart System(50%)
 
 ## Interesting Features
 - Base Controller
 
 ## Features in progress
-- Cart System
+- Front end layout
 
 ## Improvements
 - Abstract Internationalization into a package
