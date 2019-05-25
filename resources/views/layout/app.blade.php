@@ -10,8 +10,12 @@
 </head>
 
 <body>
+<!-- Page Preloder -->
+<div id="preloder">
+    <div class="loader"></div>
+</div>
 
-<div id="app" class="container-fluid">
+<div id="app">
     @include('layout.nav')
 
     @yield('content')

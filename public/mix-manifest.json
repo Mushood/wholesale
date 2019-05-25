@@ -1,4 +1,6 @@
 {
     "/js/app.js": "/js/app.js",
-    "/css/app.css": "/css/app.css"
+    "/css/app.css": "/css/app.css",
+    "/css/flaticon.css": "/css/flaticon.css",
+    "/css/font-awesome.min.css": "/css/font-awesome.min.css"
 }

@@ -28,6 +28,15 @@ Vue.component('example-component', require('./components/ExampleComponent.vue').
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
+$(window).on('load', function() {
+    /*------------------
+        Preloder
+    --------------------*/
+    $(".loader").fadeOut();
+    $("#preloder").delay(400).fadeOut("slow");
+
+});
+
 const app = new Vue({
     el: '#app'
 });
