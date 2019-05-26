@@ -25,7 +25,7 @@ class ComposerServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        view()->composer('blog.create', function ($view) {
+        view()->composer(['blog.create', 'blog.index', 'blog.show'], function ($view) {
             $view->with([
                 'categories' => Category::where('type', 'category')->get()
             ]);

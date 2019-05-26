@@ -84,4 +84,19 @@ class BlogController extends BaseController
         return redirect()->route('blog.index');
     }
 
+    public function category(Request $request, $category)
+    {
+        $blogs = $category->blogs()->latest()->paginate(SELF::PAGINATION);
+
+        if ($request->wantsJson()) {
+
+            return BlogResource::collection($blogs);
+        }
+
+        return view('blog.index', [
+            'blogs' => $blogs,
+            'category' => $category
+        ]);
+    }
+
 }

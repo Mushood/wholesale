@@ -11071,6 +11071,26 @@ ol {
   display: none;
 }
 
+.page-top-info {
+  background: #f8f7f7;
+  padding: 30px 0 20px;
+}
+
+.page-top-info h4 {
+  color: #414141;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.pagination {
+  justify-content: center;
+}
+
+.content-padding {
+  padding-top: 10vh;
+  padding-bottom: 10vh;
+}
+
 /* ----------------
   Footer section
 ---------------------*/
@@ -11185,6 +11205,29 @@ ol {
 .fw-latest-post-widget .lp-content .readmore {
   font-size: 12px;
   color: #f51167;
+}
+
+/*---------------------
+  Blog page
+-----------------------*/
+
+.blog-categories {
+  text-align: right;
+}
+
+.blog-categories a {
+  color: #f51167;
+}
+
+.blog-categories a:hover {
+  color: #3490dc;
+}
+
+.blog-categories a:hover:after {
+  width: 7px;
+  height: 7px;
+  top: 6px;
+  background: #ec105a;
 }
 
 /* ----------------

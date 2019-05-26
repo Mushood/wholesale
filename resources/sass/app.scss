@@ -405,6 +405,26 @@ ol {
   display: none;
 }
 
+
+.page-top-info {
+  background: #f8f7f7;
+  padding: 30px 0 20px;
+  h4 {
+    color: #414141;
+    font-weight: 700;
+    text-transform: uppercase;
+  }
+}
+
+.pagination {
+  justify-content: center;
+}
+
+.content-padding {
+  padding-top: 10vh;
+  padding-bottom: 10vh;
+}
+
 /* ----------------
   Footer section
 ---------------------*/
@@ -515,6 +535,25 @@ ol {
   }
 }
 
+
+/*---------------------
+  Blog page
+-----------------------*/
+.blog-categories{
+  text-align: right;
+  a {
+    color: $color;
+    &:hover {
+      color: $blue;
+      &:after {
+        width: 7px;
+        height: 7px;
+        top: 6px;
+        background: #ec105a;
+      }
+    }
+  }
+}
 /* ----------------
   Responsive
 ---------------------*/

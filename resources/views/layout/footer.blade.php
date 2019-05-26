@@ -52,5 +52,3 @@
     </div>
 </section>
 <!-- Footer section end -->
-
-<script src="{{asset('js/app.js')}}"></script>

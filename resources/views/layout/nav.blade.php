@@ -48,7 +48,7 @@
                         <li><a href="#">Sneakers</a></li>
                     </ul>
                 </li>
-                <li><a href="#">Blog</a></li>
+                <li><a href="{{ route('blog.index') }}">Blog</a></li>
             </ul>
         </div>
     </nav>

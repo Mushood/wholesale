@@ -17,6 +17,7 @@ This project provides an interface to manage selling products in wholesale while
 - Add language_id to users
 - Price usd converter
 - Set job to clean deleted models
+- sluggable
 ______________________________
 - Newsletter Management
 - Wishlist 
