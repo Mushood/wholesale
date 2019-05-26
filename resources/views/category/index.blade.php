@@ -4,7 +4,7 @@
     <div class="container">
         <h3>All Categories</h3>
 
-        @foreach($categories as $category)
+        @foreach($allCategories as $category)
             <div class="row">
                 <div class="col-xs-12">
                     <h3>
@@ -15,6 +15,6 @@
                 </div>
             </div>
         @endforeach
-        {{ $categories->links() }}
+        {{ $allCategories->links() }}
     </div>
 @endsection

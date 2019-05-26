@@ -24,7 +24,7 @@
                 </a>
             </div>
             <div class="col-lg-4 blog-categories">
-                @include('blog.category)
+                @include('blog.category')
             </div>
         </div>
     </div>

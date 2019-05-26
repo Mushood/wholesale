@@ -35,7 +35,7 @@ class CategoryController extends BaseController
 
     public function setVariableNamePlural()
     {
-        $this->variableNamePlural = 'categories';
+        $this->variableNamePlural = 'allCategories';
     }
 
 
