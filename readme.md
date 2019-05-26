@@ -17,7 +17,6 @@ This project provides an interface to manage selling products in wholesale while
 - Add language_id to users
 - Price usd converter
 - Set job to clean deleted models
-- sluggable
 ______________________________
 - Newsletter Management
 - Wishlist 
@@ -29,7 +28,7 @@ ______________________________
 The application is developed in a TDD way to ensure that our code is reliable
 
 ## Features implemented already
-- Blogging with image,published scope, categorisable (70%) - Missing views and policies (user dependent)
+- Blogging with image,published scope, categorisable (90%) - policies (user dependent)
 - User management(50%)  with Roles (Admin, Wholesaler, Client) 
 - Image management(50%) 
 - Internationalization (Currency / Language / Country)
@@ -38,6 +37,8 @@ The application is developed in a TDD way to ensure that our code is reliable
 - Shop Management(50%)
 - Products Management(50%)
 - Cart System(50%)
+- Translatable
+- Sluggable
 
 ## Interesting Features
 - Base Controller

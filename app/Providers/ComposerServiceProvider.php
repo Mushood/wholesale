@@ -25,7 +25,7 @@ class ComposerServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        view()->composer(['blog.create', 'blog.index', 'blog.show'], function ($view) {
+        view()->composer('*', function ($view) {
             $view->with([
                 'categories' => Category::where('type', 'category')->get()
             ]);
@@ -33,7 +33,6 @@ class ComposerServiceProvider extends ServiceProvider
 
         view()->composer('product.create', function ($view) {
             $view->with([
-                'categories' => Category::where('type', 'category')->get(),
                 'brands'     => Brand::all()
             ]);
         });

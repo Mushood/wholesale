@@ -26,7 +26,7 @@
                                 <i class="flaticon-bag"></i>
                                 <span>0</span>
                             </div>
-                            <a href="#">Shopping Cart</a>
+                            <a href="{{ route('cart.index') }}">Shopping Cart</a>
                         </div>
                     </div>
                 </div>
@@ -37,9 +37,11 @@
         <div class="container">
             <!-- menu -->
             <ul class="main-menu">
-                <li><a href="#">Home</a></li>
-                <li><a href="#">Women</a></li>
-                <li><a href="#">Men</a></li>
+                <li><a href="{{ route('welcome') }}">Home</a></li>
+                @foreach($categories as $category)
+                    <li><a href="">{{ $category->title }}</a></li>
+                @endforeach
+                {{--
                 <li><a href="#">Jewelry
                         <span class="new">New</span>
                     </a></li>
@@ -48,6 +50,7 @@
                         <li><a href="#">Sneakers</a></li>
                     </ul>
                 </li>
+                --}}
                 <li><a href="{{ route('blog.index') }}">Blog</a></li>
             </ul>
         </div>

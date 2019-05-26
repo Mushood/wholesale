@@ -12,12 +12,12 @@ class CategoryTableSeeder extends Seeder
      */
     public function run()
     {
-        factory(App\Models\Category::class, 10)->create();
+        factory(App\Models\Category::class, 5)->create();
 
-        factory(App\Models\Category::class, 10)->create(['published' => true]);
+        factory(App\Models\Category::class, 5)->create(['published' => true]);
 
-        factory(App\Models\Category::class, 10)->create(['type' => 'tag']);
+        factory(App\Models\Category::class, 5)->create(['type' => 'tag']);
 
-        factory(App\Models\Category::class, 10)->create(['type' => 'tag', 'published' => true]);
+        factory(App\Models\Category::class, 5)->create(['type' => 'tag', 'published' => true]);
     }
 }
