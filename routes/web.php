@@ -6,7 +6,7 @@ Auth::routes(['verify' => true]);
 
 Route::get('/home', 'HomeController@index')->name('home')->middleware('verified');
 
-Route::get('blog/category/{category}', 'BlogController@category')->name('blog.category');
+Route::get('blog/category/{slug}', 'BlogController@category')->name('blog.category');
 Route::get('blog/publish/{blog}', 'BlogController@publish')->name('blog.publish');
 Route::get('blog/unpublish/{blog}', 'BlogController@unpublish')->name('blog.unpublish');
 Route::get('blog/title/{slug}', 'BlogController@showSlug')->name('blog.show.slug');

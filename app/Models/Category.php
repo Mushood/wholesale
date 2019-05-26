@@ -41,7 +41,7 @@ class Category extends Model implements HasMedia
      * @var array
      */
     public $translatedAttributes = [
-        'title', 'description',
+        'title', 'description', 'slug'
     ];
 
     /**

@@ -20,6 +20,7 @@ class CategoryResource extends JsonResource
             'level'         => $this->level,
             'type'          => $this->type,
             'views'         => $this->views,
+            'slug'          => $this->slug,
         ];
     }
 }

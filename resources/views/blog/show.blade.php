@@ -24,14 +24,7 @@
                 </a>
             </div>
             <div class="col-lg-4 blog-categories">
-                <h4>Categories</h4>
-                @foreach($categories as $category)
-                    <h5>
-                        <a href="{{ route('blog.category', ['category' => $category->id]) }}">
-                            {{ $category->title }}
-                        </a>
-                    </h5>
-                @endforeach
+                @include('blog.category)
             </div>
         </div>
     </div>

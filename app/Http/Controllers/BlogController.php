@@ -6,6 +6,7 @@ use App\Http\Requests\BlogRequest;
 use App\Http\Resources\BlogResource;
 use App\Models\Blog;
 use App\Models\BlogTranslation;
+use App\Models\CategoryTranslation;
 use App\Traits\Publishable;
 use Illuminate\Http\Request;
 
@@ -103,8 +104,9 @@ class BlogController extends BaseController
         return redirect()->route('blog.index');
     }
 
-    public function category(Request $request, $category)
+    public function category(Request $request, $slug)
     {
+        $category = CategoryTranslation::where('slug', $slug)->first()->category;
         $blogs = $category->blogs()->latest()->paginate(SELF::PAGINATION);
 
         if ($request->wantsJson()) {
