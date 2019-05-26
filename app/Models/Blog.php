@@ -36,7 +36,7 @@ class Blog extends Model implements HasMedia
      * @var array
      */
     public $translatedAttributes = [
-        'title', 'subtitle', 'meta_description', 'introduction', 'body'
+        'title', 'subtitle', 'meta_description', 'introduction', 'body', 'slug'
     ];
 
     /**
@@ -73,5 +73,15 @@ class Blog extends Model implements HasMedia
     public function category()
     {
         return $this->belongsTo('App\Models\Category');
+    }
+
+    /**
+     * Get blog's author's name
+     *
+     * @return string
+     */
+    public function author()
+    {
+        return $this->user()->exists() ? $this->user->name() : "Anonymous";
     }
 }

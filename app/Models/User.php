@@ -48,6 +48,16 @@ class User extends Authenticatable implements MustVerifyEmail
     ];
 
     /**
+     * Gets full name of user
+     *
+     * @return string
+     */
+    public function name()
+    {
+        return $this->first_name . " " . $this->last_name;
+    }
+
+    /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function shop()

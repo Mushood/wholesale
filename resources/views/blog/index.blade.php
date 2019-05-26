@@ -23,7 +23,7 @@
                         <div class="col-sm-8">
                             <h4>{{ $blog->title }}</h4>
                             <p>{{ $blog->introduction }}</p>
-                            <a class="btn btn-primary site-btn col-xs-6 pull-right" href="{{ route('blog.show', ['blog' => $blog->id]) }}">
+                            <a class="btn btn-primary site-btn col-xs-6 pull-right" href="{{ route('blog.show.slug', ['slug' => $blog->slug]) }}">
                                 Read More
                             </a>
                         </div>

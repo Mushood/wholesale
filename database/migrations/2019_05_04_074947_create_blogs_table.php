@@ -37,6 +37,8 @@ class CreateBlogsTable extends Migration
             $table->text('introduction')->nullable();
             $table->text('body');
 
+            $table->string('slug');
+
             $table->unique(['blog_id','locale']);
             $table->foreign('blog_id')->references('id')->on('blogs')->onDelete('cascade');
         });

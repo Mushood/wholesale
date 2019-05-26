@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\BlogRequest;
 use App\Http\Resources\BlogResource;
 use App\Models\Blog;
+use App\Models\BlogTranslation;
 use App\Traits\Publishable;
 use Illuminate\Http\Request;
 
@@ -35,6 +36,24 @@ class BlogController extends BaseController
     public function setVariableNamePlural()
     {
         $this->variableNamePlural = 'blogs';
+    }
+
+    /**
+     * @param Request $request
+     * @param $model
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function showSlug(Request $request, $slug)
+    {
+        $blog = BlogTranslation::where('slug', $slug)->first()->blog;
+        if ($request->wantsJson()) {
+
+            return new BlogResource($blog);
+        }
+
+        return view('blog.show', [
+            'blog' => $blog
+        ]);
     }
 
     /**

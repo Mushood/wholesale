@@ -18,6 +18,7 @@
                 <img src="{{ $blog->media->first()->name ?? "No Picture"}}" alt="{{ $blog->title }}" class="img-fluid">
                 <h5>{{ $blog->introduction }}</h5>
                 <p>{{ $blog->body }}</p>
+                <h4>{{ $blog->author() }}</h4>
                 <a class="btn btn-primary site-btn col-xs-6 pull-right" href="{{ route('blog.index') }}">
                     Back
                 </a>
