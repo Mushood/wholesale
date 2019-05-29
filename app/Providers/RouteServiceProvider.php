@@ -8,6 +8,7 @@ use App\Models\User;
 use App\Models\Brand;
 use App\Models\Product;
 use App\Models\Category;
+use App\Models\CategoryTranslation;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
 
@@ -35,6 +36,7 @@ class RouteServiceProvider extends ServiceProvider
         Route::model('brand', Brand::class);
         Route::model('category', Category::class);
         Route::model('product', Product::class);
+        Route::model('categoryTrans', CategoryTranslation::class);
 
         parent::boot();
     }

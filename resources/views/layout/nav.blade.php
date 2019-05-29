@@ -39,7 +39,7 @@
             <ul class="main-menu">
                 <li><a href="{{ route('welcome') }}">Home</a></li>
                 @foreach($categories as $category)
-                    <li><a href="{{ route('category.index') }}">{{ $category->title }}</a></li>
+                    <li><a href="{{ route('category', ['categoryTrans' => $category->slug]) }}">{{ $category->title }}</a></li>
                 @endforeach
                 {{--
                 <li><a href="#">Jewelry

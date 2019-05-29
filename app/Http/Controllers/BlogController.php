@@ -104,10 +104,9 @@ class BlogController extends BaseController
         return redirect()->route('blog.index');
     }
 
-    public function category(Request $request, $slug)
+    public function category(Request $request, $categoryTrans)
     {
-        $category = CategoryTranslation::where('slug', $slug)->first()->category;
-        $blogs = $category->blogs()->latest()->paginate(SELF::PAGINATION);
+        $blogs = $categoryTrans->category->blogs()->latest()->paginate(SELF::PAGINATION);
 
         if ($request->wantsJson()) {
 
@@ -116,7 +115,7 @@ class BlogController extends BaseController
 
         return view('blog.index', [
             'blogs' => $blogs,
-            'category' => $category
+            'category' => $categoryTrans->category
         ]);
     }
 

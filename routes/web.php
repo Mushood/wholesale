@@ -1,14 +1,14 @@
 <?php
 
 Route::get('/', 'PageController@welcome')->name('welcome');
-Route::get('/category', 'PageController@category')->name('category');
+Route::get('/category/{categoryTrans}', 'PageController@category')->name('category');
 Route::get('/contact', 'PageController@contact')->name('contact');
 
 Auth::routes(['verify' => true]);
 
 Route::get('/home', 'HomeController@index')->name('home')->middleware('verified');
 
-Route::get('blog/category/{slug}', 'BlogController@category')->name('blog.category');
+Route::get('blog/category/{categoryTrans}', 'BlogController@category')->name('blog.category');
 Route::get('blog/publish/{blog}', 'BlogController@publish')->name('blog.publish');
 Route::get('blog/unpublish/{blog}', 'BlogController@unpublish')->name('blog.unpublish');
 Route::get('blog/title/{slug}', 'BlogController@showSlug')->name('blog.show.slug');
