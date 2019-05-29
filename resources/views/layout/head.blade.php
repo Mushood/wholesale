@@ -11,7 +11,7 @@
 <link href="{{asset('css/flaticon.css')}}" rel="stylesheet">
 
 
-<link rel="stylesheet" href="css/slicknav.min.css"/>
-<link rel="stylesheet" href="css/jquery-ui.min.css"/>
-<link rel="stylesheet" href="css/owl.carousel.min.css"/>
-<link rel="stylesheet" href="css/animate.css"/>
+<link rel="stylesheet" href="{{asset('css/slicknav.min.css')}}"/>
+<link rel="stylesheet" href="{{asset('css/jquery-ui.min.css')}}"/>
+<link rel="stylesheet" href="{{asset('css/owl.carousel.min.css')}}"/>
+<link rel="stylesheet" href="{{asset('css/animate.css')}}"/>
