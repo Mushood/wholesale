@@ -44,7 +44,10 @@ The application is developed in a TDD way to ensure that our code is reliable
 - Base Controller
 
 ## Features in progress
-- Front end layout
+- Front end layout - Products
+- Front end layout - Product
+- Front end layout - Cart
+- Front end layout - Checkout
 
 ## Improvements
 - Abstract Internationalization into a package

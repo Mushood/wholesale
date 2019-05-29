@@ -11,4 +11,16 @@ class PageController extends Controller
 
         return view('welcome');
     }
+
+    public function category(Request $request)
+    {
+
+        return view('category.index');
+    }
+
+    public function contact(Request $request)
+    {
+
+        return view('contact');
+    }
 }

@@ -19,7 +19,7 @@
                     <div class="user-panel">
                         <div class="up-item">
                             <i class="flaticon-profile"></i>
-                            <a href="{{ route('login') }}">Sign</a> In or <a href="{{ route('register') }}">Create Account</a>
+                            <a href="{{ route('login') }}">Sign In</a>  or <a href="{{ route('register') }}">Create Account</a>
                         </div>
                         <div class="up-item">
                             <div class="shopping-card">
@@ -39,7 +39,7 @@
             <ul class="main-menu">
                 <li><a href="{{ route('welcome') }}">Home</a></li>
                 @foreach($categories as $category)
-                    <li><a href="">{{ $category->title }}</a></li>
+                    <li><a href="{{ route('category.index') }}">{{ $category->title }}</a></li>
                 @endforeach
                 {{--
                 <li><a href="#">Jewelry
@@ -52,6 +52,7 @@
                 </li>
                 --}}
                 <li><a href="{{ route('blog.index') }}">Blog</a></li>
+                <li><a href="{{ route('contact') }}">Contact</a></li>
             </ul>
         </div>
     </nav>

@@ -97,4 +97,10 @@ class ShoppingController extends Controller
 
         return response()->json([] , Response::HTTP_OK);
     }
+
+    public function checkout(Request $request)
+    {
+
+        return view('cart.checkout');
+    }
 }
