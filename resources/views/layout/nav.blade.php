@@ -21,13 +21,7 @@
                             <i class="flaticon-profile"></i>
                             <a href="{{ route('login') }}">Sign In</a>  or <a href="{{ route('register') }}">Create Account</a>
                         </div>
-                        <div class="up-item">
-                            <div class="shopping-card">
-                                <i class="flaticon-bag"></i>
-                                <span>0</span>
-                            </div>
-                            <a href="{{ route('cart.index') }}">Shopping Cart</a>
-                        </div>
+                        <cart-nav></cart-nav>
                     </div>
                 </div>
             </div>
