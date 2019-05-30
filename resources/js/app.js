@@ -29,6 +29,9 @@ Vue.use(VueSweetalert2);
 import VueToast from 'vue-toast-notification';
 Vue.use(VueToast);
 
+import VueSlider from 'vue-slider-component';
+Vue.component('vue-slider', VueSlider);
+
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application

@@ -24,6 +24,7 @@
         "vue-template-compiler": "^2.6.10"
     },
     "dependencies": {
+        "vue-slider-component": "^3.0.31",
         "vue-sweetalert2": "^2.0.5",
         "vue-toast-notification": "0.0.2"
     }
