@@ -10,7 +10,7 @@ class PageController extends Controller
     public function welcome(Request $request)
     {
 
-        return view('welcome');
+        return view('welcome.index');
     }
 
     public function category(Request $request, $categoryTrans)
