@@ -12,7 +12,18 @@
 <script>
     export default {
         mounted() {
-            console.log('products landing mounted.')
+            const vm = this;
+            console.log('products landing mounted.');
+
+            Event.$on('submitsearch', function (search) {
+                alert('asdf');
+            });
+        },
+
+        props: {
+            route_search: {
+                required: true
+            }
         },
 
         data() {
@@ -21,6 +32,25 @@
                     {name: 'name'},{name: 'name'},
                 ]
             }
+        },
+
+        methods: {
+            fetchProducts(search) {
+                const vm = this;
+                axios.post(vm.route_search, {
+                    search: search,
+                })
+                .then(function (response_axios) {
+                    if (response_axios.data.code == 200) {
+
+                    } else {
+
+                    }
+                })
+                .catch(function (error) {
+
+                });
+            },
         },
     }
 </script>

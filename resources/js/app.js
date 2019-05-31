@@ -32,6 +32,12 @@ Vue.use(VueToast);
 import VueSlider from 'vue-slider-component';
 Vue.component('vue-slider', VueSlider);
 
+
+/**
+ * New view instance for event communication
+ */
+window.Event = new Vue();
+
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application

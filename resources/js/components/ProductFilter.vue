@@ -4,7 +4,10 @@
             <h2 class="fw-title">Categories</h2>
             <ul class="category-menu">
                 <li v-for="category in filters.categories">
-                    <input name="category" :value="category" type="checkbox" class="checkbox-custom" v-model="search.categories">{{ category.name }}
+                    <input
+                            name="category" :value="category" type="checkbox" class="checkbox-custom"
+                            v-model="search.categories" @change="submitSearch"
+                    >{{ category.name }}
                 </li>
             </ul>
         </div>
@@ -13,20 +16,24 @@
             <div class="price-range-wrap">
                 <h4>Price</h4>
                 <vue-slider
-                        :min="filters.price.min"
-                        :max="filters.price.max"
-                        :step-style='{"backgroundColor": "#e77771"}'
+                        v-model="search.price"
                         :bg-style="{'backgroundColor': 'grey',}"
-                        :tooltipStyle='{"backgroundColor": "#e77771","borderColor": "#e77771"}'
-                        :processStyle='{"backgroundColor": "#e77771"}'
-                        :piecewise="true"
+                        :tooltipStyle='{"backgroundColor": "#f51167","borderColor": "#f51167"}'
+                        :processStyle='{"backgroundColor": "#f51167"}'
+                        :process="true"
+                        @change="submitSearch"
                 ></vue-slider>
             </div>
         </div>
         <div class="filter-widget">
             <h2 class="fw-title">Brand</h2>
             <ul class="category-menu">
-                <li v-for="category in filters.categories"><a href="#">{{ category.name }}</a></li>
+                <li v-for="brand in filters.brands">
+                    <input
+                            name="category" :value="brand" type="checkbox" class="checkbox-custom"
+                            v-model="search.brands" @change="submitSearch"
+                    >{{ brand.name }}
+                </li>
             </ul>
         </div>
     </div>
@@ -45,16 +52,24 @@
         data() {
             return {
                 filters: {
+                    name: "",
                     categories: [ {id: 1, name: 'name1'}, {id: 2, name: 'name2'}],
                     price: { min: 0, max: 100},
                     brands: [ {id: 1, name: 'name1'}, {id: 2, name: 'name2'}],
                 },
                 search: {
+                    name: "",
                     categories: [],
-                    price: { min: 0, max: 100},
+                    price: [0, 100],
                     brands: [],
                 }
             }
+        },
+
+        methods: {
+            submitSearch() {
+                Event.$emit('submitsearch', this.search);
+            },
         },
     }
 </script>

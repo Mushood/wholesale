@@ -24,7 +24,9 @@
                 </div>
 
                 <div class="col-lg-9  order-1 order-lg-2 mb-5 mb-lg-0">
-                    <products-landing></products-landing>
+                    <products-landing
+                        route_search="{{ route('product.index') }}"
+                    ></products-landing>
                 </div>
             </div>
         </div>
