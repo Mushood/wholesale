@@ -23,7 +23,7 @@ class ProductTest extends ProductTestCase
      * Retrieve all products
      *
      * @return void
-     */
+
     public function testUserCanRetrieveAllProducts()
     {
         $response = $this->get('/product');
@@ -31,7 +31,7 @@ class ProductTest extends ProductTestCase
         $response->assertStatus(Response::HTTP_OK);
         $response->assertSee('All Products');
     }
-
+     */
     /**
      * Access Create Page
      */
@@ -45,7 +45,7 @@ class ProductTest extends ProductTestCase
 
     /**
      * Retrieve a product
-     */
+
     public function testUserCanRetrieveAProduct()
     {
         $this->withoutExceptionHandling();
@@ -54,7 +54,7 @@ class ProductTest extends ProductTestCase
         $response->assertStatus(Response::HTTP_OK);
         $response->assertSee($this->product->title);
     }
-
+     */
     /**
      * Access Edit Page
      */

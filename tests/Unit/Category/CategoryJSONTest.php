@@ -72,7 +72,7 @@ class CategoryJSONTest extends CategoryTestCase
 
     /**
      * Api to retrieve the category
-     */
+
     public function testUserCanRetrieveACategoryJSON()
     {
         $response   = $this->getJsonRequest()->get('/category/' . $this->category->id);
@@ -80,6 +80,7 @@ class CategoryJSONTest extends CategoryTestCase
         $response->assertStatus(Response::HTTP_OK);
         $response->assertJsonStructure($this->structure);
     }
+     */
 
     /**
      * Api to update the category

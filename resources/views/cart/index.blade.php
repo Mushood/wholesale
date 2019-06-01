@@ -7,7 +7,7 @@
             <h4>Your cart</h4>
             <div class="site-pagination">
                 <a href="">Home</a> /
-                <a href="">Your cart</a>
+                <a href="">My Cart</a>
             </div>
         </div>
     </div>

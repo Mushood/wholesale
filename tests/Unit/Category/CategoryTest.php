@@ -29,12 +29,12 @@ class CategoryTest extends CategoryTestCase
         $response = $this->get('/category');
 
         $response->assertStatus(Response::HTTP_OK);
-        $response->assertSee('All Categories');
+        $response->assertSee('Category Page');
     }
 
     /**
      * Access Create Page
-     */
+
     public function testUserCanAccessCreatePage()
     {
         $response = $this->get('/category/create');
@@ -42,7 +42,7 @@ class CategoryTest extends CategoryTestCase
         $response->assertStatus(Response::HTTP_OK);
         $response->assertSee('Create Category');
     }
-
+     */
     /**
      * Store new category
      */
@@ -78,7 +78,7 @@ class CategoryTest extends CategoryTestCase
     public function testUserCanRetrieveACategory()
     {
         $this->withoutExceptionHandling();
-        $response   = $this->get('/category/' . $this->category->id);
+        $response   = $this->get('/category/' . $this->category->slug);
 
         $response->assertStatus(Response::HTTP_OK);
         $response->assertSee($this->category->title);
