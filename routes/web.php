@@ -27,6 +27,9 @@ Route::get('category/publish/{category}', 'CategoryController@publish')->name('c
 Route::get('category/unpublish/{category}', 'CategoryController@unpublish')->name('category.unpublish');
 Route::resource('category', 'CategoryController');
 
+Route::post('product/search', 'SearchController@search')->name('product.search');
+Route::get('product/search/criteria', 'SearchController@getSearchCriteria')->name('product.search.criteria');
+
 Route::get('product/publish/{product}', 'ProductController@publish')->name('product.publish');
 Route::get('product/unpublish/{product}', 'ProductController@unpublish')->name('product.unpublish');
 Route::resource('product', 'ProductController');

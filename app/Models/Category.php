@@ -6,11 +6,13 @@ use App\Scopes\PublishedScope;
 use Illuminate\Support\Facades\Auth;
 use Dimsav\Translatable\Translatable;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 use Spatie\MediaLibrary\HasMedia\HasMedia;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Spatie\MediaLibrary\HasMedia\HasMediaTrait;
+use App\Services\Searchable\SearchableInterface;
 
-class Category extends Model implements HasMedia
+class Category extends Model implements HasMedia, SearchableInterface
 {
     use Translatable, HasMediaTrait, SoftDeletes;
 
@@ -78,5 +80,40 @@ class Category extends Model implements HasMedia
     public function products()
     {
         return $this->hasMany('App\Models\Product');
+    }
+
+    /**
+     * Add category search criteria
+     *
+     * @param array $criteria
+     * @return array
+     */
+    public static function getCriteria(array &$criteria)
+    {
+        $criteria['categories'] = [];
+        $categories = DB::table('categories')
+            ->join('category_translations', 'categories.id', '=', 'category_translations.category_id')
+            ->where('categories.published', true)
+            ->where('categories.type', 'category')
+            ->orderBy('category_translations.title')
+            ->get();
+        foreach ($categories as $category) {
+            array_push($criteria['categories'], [
+                'id'    => $category->id,
+                'name'  => $category->title
+            ]);
+        }
+
+        return $criteria;
+    }
+
+    public static function filter($products, $search)
+    {
+        if (isset($search['categories'])) {
+            $categoryIds    = collect($search['categories'])->pluck('id');
+            $products       = $products->whereIn('category_id', $categoryIds);
+        }
+
+        return $products;
     }
 }

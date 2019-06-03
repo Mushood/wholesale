@@ -9,8 +9,9 @@ use Illuminate\Database\Eloquent\Model;
 use Spatie\MediaLibrary\HasMedia\HasMedia;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Spatie\MediaLibrary\HasMedia\HasMediaTrait;
+use App\Services\Searchable\SearchableInterface;
 
-class Product extends Model implements HasMedia
+class Product extends Model implements HasMedia, SearchableInterface
 {
     use Translatable, HasMediaTrait, SoftDeletes;
 
@@ -89,5 +90,39 @@ class Product extends Model implements HasMedia
     public function prices()
     {
         return $this->hasMany('App\Models\ProductPrice');
+    }
+
+    /**
+     * Add attribute search criteria
+     *
+     * @param array $criteria
+     * @return array
+     */
+    public static function getCriteria(array &$criteria)
+    {
+        $criteria['name'] = "";
+
+        $minPrice = ProductPrice::orderBy('price', 'ASC')->first()->price;
+        $maxPrice = ProductPrice::orderBy('price', 'DESC')->first()->price;
+        $criteria['price']['min'] = $minPrice;
+        $criteria['price']['max'] = $maxPrice;
+
+        return $criteria;
+    }
+
+    public static function filter($products, $search)
+    {
+        if (isset($search['price'])) {
+            $products = $products->join('product_prices', 'products.id', '=', 'product_prices.product_id')
+                ->where('product_prices.price', '>=', $search['price']['min'])
+                ->where('product_prices.price', '<=', $search['price']['max']);
+        }
+
+        if (isset($search['name'])) {
+            $products = $products->join('product_translations', 'products.id', '=', 'product_translations.product_id')
+                ->where('product_translations.title', 'LIKE', '%' . $search['name'] .'%');
+        }
+
+        return $products;
     }
 }

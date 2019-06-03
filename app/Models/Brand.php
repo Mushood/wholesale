@@ -8,8 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 use Spatie\MediaLibrary\HasMedia\HasMedia;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Spatie\MediaLibrary\HasMedia\HasMediaTrait;
+use App\Services\Searchable\SearchableInterface;
 
-class Brand extends Model implements HasMedia
+class Brand extends Model implements HasMedia, SearchableInterface
 {
     use HasMediaTrait, SoftDeletes;
 
@@ -54,5 +55,35 @@ class Brand extends Model implements HasMedia
     public function products()
     {
         return $this->hasMany('App\Models\Product');
+    }
+
+    /**
+     * Add brand search criteria
+     *
+     * @param array $criteria
+     * @return array
+     */
+    public static function getCriteria(array &$criteria)
+    {
+        $criteria['brands'] = [];
+        $brands = self::where('published', true)->orderBy('title')->get();
+        foreach ($brands as $brand) {
+            array_push($criteria['brands'], [
+                'id'    => $brand->id,
+                'name'  => $brand->title
+            ]);
+        }
+
+        return $criteria;
+    }
+
+    public static function filter($products, $search)
+    {
+        if (isset($search['brand'])) {
+            $brandIds = collect($search['brands'])->pluck('id');
+            $products = $products->whereIn('brand_id', $brandIds);
+        }
+
+        return $products;
     }
 }
