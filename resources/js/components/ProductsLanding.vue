@@ -3,8 +3,8 @@
         <div class="col-lg-4 col-sm-6" v-for="product in products">
             <product-preview :product="product"></product-preview>
         </div>
-        <div class="text-center w-100 pt-3">
-            <button class="site-btn sb-line sb-dark">LOAD MORE</button>
+        <div class="text-center w-100 pt-3" v-show="show_loadmore">
+            <button class="site-btn sb-line sb-dark" @click="fetchProducts(current_search)">LOAD MORE</button>
         </div>
     </div>
 </template>
@@ -15,8 +15,11 @@
             const vm = this;
             console.log('products landing mounted.');
 
+            vm.route_paginated_search = vm.route_search;
             vm.fetchProducts(vm.default_search);
+
             Event.$on('submitsearch', function (search) {
+                vm.route_paginated_search = vm.route_search;
                 vm.fetchProducts(search);
             });
         },
@@ -36,19 +39,37 @@
                     categories: [],
                     price: { min: 0, max: 1000},
                     brands: [],
-                }
+                },
+
+                show_loadmore: false,
+                route_paginated_search : "",
+                current_search: {},
             }
         },
 
         methods: {
             fetchProducts(search) {
                 const vm = this;
-                axios.post(vm.route_search, {
+                vm.current_search = search;
+                axios.post(vm.route_paginated_search, {
                     search: search,
                 })
                 .then(function (response_axios) {
                     if (response_axios.status === 200) {
-                        vm.products = response_axios.data.data;
+                        if (vm.route_paginated_search == vm.route_search) {
+                            vm.products = response_axios.data.data;
+                        } else {
+                            response_axios.data.data.forEach(function(item, index) {
+                                vm.products.push(item);
+                            });
+                        }
+                        if (response_axios.data.next_page_url) {
+                            vm.route_paginated_search = response_axios.data.next_page_url;
+                            vm.show_loadmore = true;
+                        } else {
+                            vm.show_loadmore = false;
+                        }
+
                     } else {
                         vm.fetchProducts(vm.default_search);
                     }
