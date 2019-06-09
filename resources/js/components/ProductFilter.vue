@@ -7,7 +7,7 @@
                     <input
                             name="category" :value="category" type="checkbox" class="checkbox-custom"
                             v-model="search.categories" @change="submitSearch"
-                    >{{ category.name }}
+                    > {{ category.title }}
                 </li>
             </ul>
         </div>
@@ -32,9 +32,9 @@
             <ul class="category-menu">
                 <li v-for="brand in filters.brands">
                     <input
-                            name="category" :value="brand" type="checkbox" class="checkbox-custom"
+                            name="brand" :value="brand" type="checkbox" class="checkbox-custom"
                             v-model="search.brands" @change="submitSearch"
-                    >{{ brand.name }}
+                    > {{ brand.title }}
                 </li>
             </ul>
         </div>
@@ -45,10 +45,13 @@
     export default {
         mounted() {
             console.log('product filter mounted.');
+            this.filters = this.default;
         },
 
         props: {
-
+            default: {
+                required: true,
+            }
         },
 
         data() {
