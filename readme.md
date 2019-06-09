@@ -9,7 +9,7 @@ This project provides an interface to manage selling products in wholesale while
 - Categorisation / Tagging of products
 - Brands Management
 - Shop Management
-- Products Management
+- Products Management (HERE)
 - Cart System
 - Paypal Payment System
 - Product promo
@@ -39,12 +39,12 @@ The application is developed in a TDD way to ensure that our code is reliable
 - Cart System(50%)
 - Translatable
 - Sluggable
+- Product searchable/filterable
 
 ## Interesting Features
 - Base Controller
 
 ## Features in progress
-- Front end layout - Products
 - Front end layout - Product
 - Front end layout - Cart
 - Front end layout - Checkout
