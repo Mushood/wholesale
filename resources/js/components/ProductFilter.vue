@@ -69,11 +69,11 @@
         },
 
         methods: {
-            submitSearch() {
+            submitSearch: _.debounce(function () {
                 this.search.price.min = this.filters.price[0];
                 this.search.price.max = this.filters.price[1];
                 Event.$emit('submitsearch', this.search);
-            },
+            }, 500),
         },
     }
 </script>
