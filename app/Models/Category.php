@@ -109,7 +109,7 @@ class Category extends Model implements HasMedia, SearchableInterface
 
     public static function filter($products, $search)
     {
-        if (isset($search['categories'])) {
+        if (isset($search['categories']) && count($search['categories']) > 0) {
             $categoryIds    = collect($search['categories'])->pluck('id');
             $products       = $products->whereIn('category_id', $categoryIds);
         }

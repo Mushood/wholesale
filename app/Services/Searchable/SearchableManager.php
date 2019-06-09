@@ -39,6 +39,10 @@ class SearchableManager
         return $this->criteria;
     }
 
+    /**
+     * @param $search
+     * @return mixed
+     */
     public function filter($search)
     {
         $products = Product::where('published', true);

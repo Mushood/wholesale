@@ -15,8 +15,9 @@
             const vm = this;
             console.log('products landing mounted.');
 
+            vm.fetchProducts(vm.default_search);
             Event.$on('submitsearch', function (search) {
-                alert('asdf');
+                vm.fetchProducts(search);
             });
         },
 
@@ -28,9 +29,14 @@
 
         data() {
             return {
-                products: [
-                    {name: 'name'},{name: 'name'},
-                ]
+                products: [],
+
+                default_search: {
+                    name: "",
+                    categories: [],
+                    price: { min: 0, max: 1000},
+                    brands: [],
+                }
             }
         },
 
@@ -41,10 +47,10 @@
                     search: search,
                 })
                 .then(function (response_axios) {
-                    if (response_axios.data.code == 200) {
-
+                    if (response_axios.status === 200) {
+                        vm.products = response_axios.data.data;
                     } else {
-
+                        vm.fetchProducts(vm.default_search);
                     }
                 })
                 .catch(function (error) {

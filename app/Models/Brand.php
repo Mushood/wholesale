@@ -79,7 +79,7 @@ class Brand extends Model implements HasMedia, SearchableInterface
 
     public static function filter($products, $search)
     {
-        if (isset($search['brand'])) {
+        if (isset($search['brands']) && count($search['brands']) > 0) {
             $brandIds = collect($search['brands'])->pluck('id');
             $products = $products->whereIn('brand_id', $brandIds);
         }

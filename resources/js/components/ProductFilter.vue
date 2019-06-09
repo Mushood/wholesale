@@ -16,7 +16,9 @@
             <div class="price-range-wrap">
                 <h4>Price</h4>
                 <vue-slider
-                        v-model="search.price"
+                        :min="0"
+                        :max="1000"
+                        v-model="filters.price"
                         :bg-style="{'backgroundColor': 'grey',}"
                         :tooltipStyle='{"backgroundColor": "#f51167","borderColor": "#f51167"}'
                         :processStyle='{"backgroundColor": "#f51167"}'
@@ -42,7 +44,7 @@
 <script>
     export default {
         mounted() {
-            console.log('product filter mounted.')
+            console.log('product filter mounted.');
         },
 
         props: {
@@ -54,13 +56,13 @@
                 filters: {
                     name: "",
                     categories: [ {id: 1, name: 'name1'}, {id: 2, name: 'name2'}],
-                    price: { min: 0, max: 100},
+                    price: [ 0, 1000],
                     brands: [ {id: 1, name: 'name1'}, {id: 2, name: 'name2'}],
                 },
                 search: {
                     name: "",
                     categories: [],
-                    price: [0, 100],
+                    price: { min: 0, max: 1000},
                     brands: [],
                 }
             }
@@ -68,6 +70,8 @@
 
         methods: {
             submitSearch() {
+                this.search.price.min = this.filters.price[0];
+                this.search.price.max = this.filters.price[1];
                 Event.$emit('submitsearch', this.search);
             },
         },

@@ -10,8 +10,8 @@
             </div>
         </div>
         <div class="pi-text">
-            <h6>$35,00</h6>
-            <p>{{ product.name }}</p>
+            <h6>{{ product.price }}</h6>
+            <p>{{ product.title }}</p>
         </div>
     </div>
 </template>
