@@ -15,7 +15,9 @@
 
 
     <!-- product section -->
-    <product></product>
+    <product
+        :product="{{ $product }}"
+    ></product>
     <!-- product section end -->
 
     @include('product.related')

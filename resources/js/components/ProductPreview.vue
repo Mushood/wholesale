@@ -19,13 +19,20 @@
 <script>
     export default {
         mounted() {
-            console.log('product preview mounted.')
+            console.log('product preview mounted.');
+            this.product = this.product_original;
         },
 
         props: {
-            product: {
+            product_original: {
                 required: true,
             }
-        }
+        },
+
+        data() {
+            return {
+                product: {},
+            }
+        },
     }
 </script>

@@ -7,7 +7,7 @@
         <div class="product-slider owl-carousel">
             <div class="product-item">
                 <div class="pi-pic">
-                    <img src="./img/product/1.jpg" alt="">
+                    <img src="/img/product/1.jpg" alt="">
                     <div class="pi-links">
                         <a href="#" class="add-card"><i class="flaticon-bag"></i><span>ADD TO CART</span></a>
                         <a href="#" class="wishlist-btn"><i class="flaticon-heart"></i></a>
@@ -21,7 +21,7 @@
             <div class="product-item">
                 <div class="pi-pic">
                     <div class="tag-new">New</div>
-                    <img src="./img/product/2.jpg" alt="">
+                    <img src="/img/product/2.jpg" alt="">
                     <div class="pi-links">
                         <a href="#" class="add-card"><i class="flaticon-bag"></i><span>ADD TO CART</span></a>
                         <a href="#" class="wishlist-btn"><i class="flaticon-heart"></i></a>
@@ -34,7 +34,7 @@
             </div>
             <div class="product-item">
                 <div class="pi-pic">
-                    <img src="./img/product/3.jpg" alt="">
+                    <img src="/img/product/3.jpg" alt="">
                     <div class="pi-links">
                         <a href="#" class="add-card"><i class="flaticon-bag"></i><span>ADD TO CART</span></a>
                         <a href="#" class="wishlist-btn"><i class="flaticon-heart"></i></a>
@@ -47,7 +47,7 @@
             </div>
             <div class="product-item">
                 <div class="pi-pic">
-                    <img src="./img/product/4.jpg" alt="">
+                    <img src="/img/product/4.jpg" alt="">
                     <div class="pi-links">
                         <a href="#" class="add-card"><i class="flaticon-bag"></i><span>ADD TO CART</span></a>
                         <a href="#" class="wishlist-btn"><i class="flaticon-heart"></i></a>
@@ -60,7 +60,7 @@
             </div>
             <div class="product-item">
                 <div class="pi-pic">
-                    <img src="./img/product/6.jpg" alt="">
+                    <img src="/img/product/6.jpg" alt="">
                     <div class="pi-links">
                         <a href="#" class="add-card"><i class="flaticon-bag"></i><span>ADD TO CART</span></a>
                         <a href="#" class="wishlist-btn"><i class="flaticon-heart"></i></a>
