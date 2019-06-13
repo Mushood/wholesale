@@ -4,7 +4,7 @@
             <div class="tag-sale">ON SALE</div>
             <img src="/img/product/6.jpg" alt="">
             <div class="pi-links">
-                <a href="#" class="add-card"><i class="flaticon-bag"></i><span>ADD TO CART</span></a>
+                <a class="add-card" @click="addProductToCart(product.id)"><i class="flaticon-bag"></i><span>ADD TO CART</span></a>
                 <a href="#" class="wishlist-btn"><i class="flaticon-heart"></i></a>
                 <a href="/product" class="wishlist-btn"><i class="flaticon-gallery"></i></a>
             </div>
@@ -33,6 +33,15 @@
             return {
                 product: {},
             }
+        },
+
+        methods: {
+            addProductToCart(id) {
+                Event.$emit('add_product_to_cart', {
+                    'product'   : id,
+                    'quantity'  : 1
+                });
+            },
         },
     }
 </script>

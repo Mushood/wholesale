@@ -21,7 +21,11 @@
                             <i class="flaticon-profile"></i>
                             <a href="{{ route('login') }}">Sign In</a>  or <a href="{{ route('register') }}">Create Account</a>
                         </div>
-                        <cart-nav></cart-nav>
+                        <cart-nav
+                            route_cart_original="{{ route('cart.add', ['product_id' => 'product_id']) }}"
+                            route_fetch_original="{{ route('cart.index') }}"
+                            :cart_original="{{ $cart }}"
+                        ></cart-nav>
                     </div>
                 </div>
             </div>

@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use App\Models\Brand;
+use App\Models\Cart;
 use App\Models\Category;
 use Illuminate\Support\ServiceProvider;
 
@@ -27,7 +28,8 @@ class ComposerServiceProvider extends ServiceProvider
     {
         view()->composer('*', function ($view) {
             $view->with([
-                'categories' => Category::where('type', 'category')->get()
+                'categories' => Category::where('type', 'category')->get(),
+                'cart'       => Cart::get(request()),
             ]);
         });
 

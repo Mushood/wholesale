@@ -1,7 +1,7 @@
 <template>
     <div class="row">
         <div class="col-lg-4 col-sm-6" v-for="product in products">
-            <product-preview :product="product"></product-preview>
+            <product-preview :product_original="product"></product-preview>
         </div>
         <div class="text-center w-100 pt-3" v-show="show_loadmore">
             <button class="site-btn sb-line sb-dark" @click="fetchProducts(current_search)">LOAD MORE</button>
