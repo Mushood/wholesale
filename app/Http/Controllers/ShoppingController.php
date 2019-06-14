@@ -31,6 +31,22 @@ class ShoppingController extends Controller
             'product_id' => $product->id,
         ]);
         $cart->save();
+        $cart->refresh();
+        
+        return new CartResource($cart);
+    }
+
+    public function remove(Request $request, $product)
+    {
+        $cart = Cart::get($request);
+
+        foreach ($cart->items as $key => $item) {
+
+            if ($item->product_id == $product->id) {
+                $item->delete();
+            }
+        }
+        $cart->refresh();
 
         return new CartResource($cart);
     }

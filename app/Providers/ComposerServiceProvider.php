@@ -28,8 +28,7 @@ class ComposerServiceProvider extends ServiceProvider
     {
         view()->composer('*', function ($view) {
             $view->with([
-                'categories' => Category::where('type', 'category')->get(),
-                'cart'       => Cart::get(request()),
+                'categories' => Category::where('type', 'category')->get()
             ]);
         });
 

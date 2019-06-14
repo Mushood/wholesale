@@ -22,9 +22,9 @@
                             <a href="{{ route('login') }}">Sign In</a>  or <a href="{{ route('register') }}">Create Account</a>
                         </div>
                         <cart-nav
-                            route_cart_original="{{ route('cart.add', ['product_id' => 'product_id']) }}"
+                            route_add_original="{{ route('cart.add', ['product_id' => 'product_id']) }}"
                             route_fetch_original="{{ route('cart.index') }}"
-                            :cart_original="{{ $cart }}"
+                            route_remove_original="{{ route('cart.remove', ['product_id' => 'product_id']) }}"
                         ></cart-nav>
                     </div>
                 </div>

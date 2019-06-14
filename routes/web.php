@@ -39,6 +39,7 @@ Route::resource('temporaryUpload', 'TemporaryUploadController');
 Route::get('cart', 'ShoppingController@index')->name('cart.index');
 Route::get('cart/checkout', 'ShoppingController@checkout')->name('cart.checkout');
 Route::get('cart/add/{product}', 'ShoppingController@add')->name('cart.add');
+Route::get('cart/remove/{product}', 'ShoppingController@remove')->name('cart.remove');
 Route::get('cart/set/{product}/{quantity}', 'ShoppingController@set')->name('cart.set');
 Route::get('cart/update/{product}/{quantity}', 'ShoppingController@update')->name('cart.update');
 Route::get('cart/save', 'ShoppingController@save')->name('cart.save')->middleware('auth');
