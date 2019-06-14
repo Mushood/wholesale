@@ -32,7 +32,7 @@ class ShoppingController extends Controller
         ]);
         $cart->save();
         $cart->refresh();
-        
+
         return new CartResource($cart);
     }
 
