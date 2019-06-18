@@ -110,6 +110,11 @@ class Product extends Model implements HasMedia, SearchableInterface
         return $criteria;
     }
 
+    /**
+     * @param $products
+     * @param $search
+     * @return mixed
+     */
     public static function filter($products, $search)
     {
         if (isset($search['price'])) {

@@ -32,6 +32,11 @@ Vue.use(VueToast);
 import VueSlider from 'vue-slider-component';
 Vue.component('vue-slider', VueSlider);
 
+/**
+ * Custom Directive
+ */
+Vue.directive('visible', (el, bind) => {
+el.style.visibility=(!!bind.value) ? 'visible' : 'hidden';});
 
 /**
  * New view instance for event communication

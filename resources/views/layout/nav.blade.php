@@ -23,6 +23,7 @@
                         </div>
                         <cart-nav
                             route_add_original="{{ route('cart.add', ['product_id' => 'product_id']) }}"
+                            route_set_original="{{ route('cart.set', ['product_id' => 'product_id', 'quantity_id' => 'quantity_id']) }}"
                             route_fetch_original="{{ route('cart.index') }}"
                             route_remove_original="{{ route('cart.remove', ['product_id' => 'product_id']) }}"
                         ></cart-nav>

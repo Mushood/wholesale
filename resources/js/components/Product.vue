@@ -20,7 +20,7 @@
                 </div>
                 <div class="col-lg-6 product-details">
                     <h2 class="p-title">{{ product.title }}</h2>
-                    <h3 class="p-price">{{ product.price }}</h3>
+                    <h3 class="p-price" v-if="product.prices">{{ product.prices[0].price }}</h3>
                     <!--<h4 class="p-stock">Available: <span>In Stock</span></h4>
                     <div class="p-rating">
                         <i class="fa fa-star-o"></i>
@@ -61,9 +61,14 @@
                     </div>-->
                     <div class="quantity">
                         <p>Quantity</p>
-                        <div class="pro-qty"><input type="text" value="1"></div>
+                        <div class="pro-qty">
+                            <span class="dec qtybtn" @click="quantity--" v-visible="quantity > 1">-</span>
+                            <input type="text" v-model="quantity">
+                            <span class="inc qtybtn" @click="quantity++">+</span>
+                        </div>
                     </div>
-                    <a href="#" class="site-btn">SHOP NOW</a>
+                    <a class="site-btn" @click="addProductToCart(product.id)" v-show="!in_cart">SHOP NOW</a>
+                    <a class="site-btn site-btn-remove" @click="removeProductFromCart(product.id)" v-show="in_cart">REMOVE</a>
                     <div id="accordion" class="accordion-area">
                         <div class="panel">
                             <div class="panel-header" id="headingOne">
@@ -110,13 +115,93 @@
 <script>
     export default {
         mounted() {
-            console.log('product filter mounted.')
+            console.log('product filter mounted.');
+            const vm = this;
+            vm.product = vm.product_original;
+            Event.$on('cart_updated', function (cart) {
+                vm.checkIfInCart(cart);
+            });
+
+            Event.$emit('get_cart');
         },
 
         props: {
-            product: {
+            product_original: {
                 required: true
             }
-        }
+        },
+        
+        data() {
+            return {
+                product: {},
+                in_cart: false,
+                found: false,
+                updated: false,
+                quantity: 1,
+            }
+        },
+
+        watch: {
+            'quantity': function(newVal, oldVal) {
+                if (this.updated) {
+                    this.setProductToCart(this.product.id);
+                } else {
+                    this.updated = true;
+                }
+            }
+        },
+
+        methods: {
+            addProductToCart(id) {
+                Event.$emit('add_product_to_cart', {
+                    'product'   : id,
+                    'quantity'  : 1
+                });
+            },
+
+            removeProductFromCart(id) {
+                Event.$emit('remove_product_from_cart', {
+                    'product'   : id,
+                    'quantity'  : 1
+                });
+            },
+
+            setProductToCart: _.debounce(function (id) {
+                const vm = this;
+                if (vm.quantity > 0) {
+                    Event.$emit('set_product_to_cart', {
+                        'product'   : id,
+                        'quantity'  : vm.quantity
+                    });
+                    vm.updated = false;
+                }
+            }, 500),
+
+            checkIfInCart(cart) {
+                const vm = this;
+                vm.found = false;
+                if (cart.items) {
+                    cart.items.forEach(function(item, index) {
+                        console.log(vm.product.title == item['product']);
+                        if (item['product'] == vm.product.title) {
+                            vm.found = true;
+                            vm.quantity = item['quantity'];
+                        }
+                    });
+                }
+                vm.in_cart = vm.found;
+            },
+        },
     }
 </script>
+
+<style>
+    .site-btn{
+        cursor: pointer;
+    }
+
+    .site-btn-remove{
+        background-color: #fff;
+        border: 1px solid #414141;
+    }
+</style>

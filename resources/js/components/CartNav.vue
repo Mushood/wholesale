@@ -16,6 +16,9 @@
             Event.$on('add_product_to_cart', function (product) {
                 vm.addCart(product);
             });
+            Event.$on('set_product_to_cart', function (product) {
+                vm.setCart(product);
+            });
             Event.$on('remove_product_from_cart', function (product) {
                 vm.removeCart(product);
             });
@@ -24,6 +27,7 @@
             });
 
             vm.route_add        = vm.route_add_original;
+            vm.route_set        = vm.route_set_original;
             vm.route_remove     = vm.route_remove_original;
             vm.route_fetch      = vm.route_fetch_original;
             vm.fetchCart();
@@ -31,6 +35,9 @@
 
         props: {
             route_add_original: {
+                required: true
+            },
+            route_set_original: {
                 required: true
             },
             route_remove_original: {
@@ -45,6 +52,7 @@
             return {
                 cart: {},
                 route_add: "",
+                route_set: "",
                 route_fetch: ""
             }
         },
@@ -65,6 +73,24 @@
                 .catch(function (error) {
 
                 });
+            },
+
+            setCart(product) {
+                const vm = this;
+                vm.route_set = vm.route_set.replace("product_id", product.product);
+                vm.route_set = vm.route_set.replace("quantity_id", product.quantity);
+                axios.get(vm.route_set)
+                    .then(function (response_axios) {
+                        console.log(response_axios.status);
+                        if (response_axios.status === 200) {
+                            vm.cart = response_axios.data.data;
+                            Event.$emit('cart_updated', vm.cart);
+                        }
+                        vm.route_set = vm.route_set_original;
+                    })
+                    .catch(function (error) {
+
+                    });
             },
 
             fetchCart() {

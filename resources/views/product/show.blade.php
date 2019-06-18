@@ -16,7 +16,7 @@
 
     <!-- product section -->
     <product
-        :product="{{ $product }}"
+        :product_original="{{ $product }}"
     ></product>
     <!-- product section end -->
 
