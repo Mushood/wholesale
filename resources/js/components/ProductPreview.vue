@@ -68,7 +68,6 @@
                 vm.found = false;
                 if (cart.items) {
                     cart.items.forEach(function(item, index) {
-                        console.log(vm.product.title == item['product']);
                         if (item['product'] == vm.product.title) {
                             vm.found = true;
                         }

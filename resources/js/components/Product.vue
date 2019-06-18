@@ -130,23 +130,24 @@
                 required: true
             }
         },
-        
+
         data() {
             return {
                 product: {},
                 in_cart: false,
                 found: false,
-                updated: false,
+                first_sync: false,
                 quantity: 1,
+                removed: false,
             }
         },
 
         watch: {
             'quantity': function(newVal, oldVal) {
-                if (this.updated) {
+                if (this.first_sync) {
                     this.setProductToCart(this.product.id);
                 } else {
-                    this.updated = true;
+                    this.first_sync = true;
                 }
             }
         },
@@ -160,6 +161,9 @@
             },
 
             removeProductFromCart(id) {
+                this.quantity = 1;
+                this.first_sync = false;
+                this.remove = true;
                 Event.$emit('remove_product_from_cart', {
                     'product'   : id,
                     'quantity'  : 1
@@ -171,9 +175,8 @@
                 if (vm.quantity > 0) {
                     Event.$emit('set_product_to_cart', {
                         'product'   : id,
-                        'quantity'  : vm.quantity
+                        'quantity'  : parseInt(vm.quantity)
                     });
-                    vm.updated = false;
                 }
             }, 500),
 
@@ -182,14 +185,17 @@
                 vm.found = false;
                 if (cart.items) {
                     cart.items.forEach(function(item, index) {
-                        console.log(vm.product.title == item['product']);
                         if (item['product'] == vm.product.title) {
                             vm.found = true;
-                            vm.quantity = item['quantity'];
+                            vm.quantity = parseInt(item['quantity']);
                         }
                     });
+                    vm.in_cart = vm.found;
                 }
-                vm.in_cart = vm.found;
+
+                if (this.remove) {
+                    this.first_sync = true;
+                }
             },
         },
     }

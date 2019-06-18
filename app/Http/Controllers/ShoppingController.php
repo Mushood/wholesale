@@ -72,6 +72,7 @@ class ShoppingController extends Controller
                 'quantity'   => $quantity
             ]);
         }
+        $cart->refresh();
 
         return new CartResource($cart);
     }
